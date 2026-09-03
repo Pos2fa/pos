@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -155,20 +156,32 @@ export default async function Home() {
       {/* ── Het probleem ─────────────────────────────────────── */}
       <section className="bg-slate-50" aria-labelledby="probleem-titel">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-          <Reveal className="max-w-3xl">
-            <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              Het probleem
-            </p>
-            <h2
-              id="probleem-titel"
-              className="mt-3 text-3xl font-extrabold text-slate-950 sm:text-4xl"
-            >
-              {home.probleemTitel}
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600">
-              {home.probleemTekst}
-            </p>
-          </Reveal>
+          <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+            <Reveal className="max-w-3xl">
+              <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
+                Het probleem
+              </p>
+              <h2
+                id="probleem-titel"
+                className="mt-3 text-3xl font-extrabold text-slate-950 sm:text-4xl"
+              >
+                {home.probleemTitel}
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-slate-600">
+                {home.probleemTekst}
+              </p>
+            </Reveal>
+            <Reveal delay={100}>
+              <Image
+                src="/images/qr-scan.jpg"
+                alt="Klant scant een verpakking met QR-code bij een zelfscankassa; de rode scanlijn valt over de code"
+                width={1600}
+                height={1073}
+                className="rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60"
+                sizes="(max-width: 1024px) 100vw, 500px"
+              />
+            </Reveal>
+          </div>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {home.probleemKaarten.map((kaart, i) => {

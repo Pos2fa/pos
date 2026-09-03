@@ -29,7 +29,7 @@ export default async function TechnologiePage() {
     <>
       {/* ── Intro ────────────────────────────────────────────── */}
       <section className="bg-navy-950">
-        <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-400 uppercase">
               De technologie
@@ -43,6 +43,17 @@ export default async function TechnologiePage() {
             <p className="mt-4 text-lg leading-8 text-slate-300">
               {technologie.introTekst2}
             </p>
+          </div>
+          <div className="mt-12 lg:mt-0">
+            <Image
+              src="/images/zelfscan-zone.jpg"
+              alt="Moderne zelfscan-zone in een supermarkt met witte kiosken, een loopband en glazen beveiligingspoortjes in blauwe accentverlichting"
+              width={1600}
+              height={1073}
+              priority
+              className="rounded-2xl border border-white/10 shadow-2xl shadow-black/40"
+              sizes="(max-width: 1024px) 100vw, 560px"
+            />
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -31,7 +32,7 @@ export default async function MarktPage() {
     <>
       {/* ── Intro ────────────────────────────────────────────── */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 pt-16 pb-14 sm:px-6 lg:px-8 lg:pt-24">
+        <div className="mx-auto max-w-7xl px-4 pt-16 pb-14 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
               Markt &amp; innovatie
@@ -42,6 +43,17 @@ export default async function MarktPage() {
             <p className="mt-6 text-lg leading-8 text-slate-600">
               {markt.introTekst}
             </p>
+          </div>
+          <div className="mt-12 lg:mt-0">
+            <Image
+              src="/images/winkelwagen.jpg"
+              alt="Gevulde winkelwagen met verse boodschappen in een licht, modern supermarktgangpad"
+              width={1600}
+              height={1073}
+              priority
+              className="rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60"
+              sizes="(max-width: 1024px) 100vw, 560px"
+            />
           </div>
         </div>
       </section>
