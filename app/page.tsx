@@ -28,6 +28,27 @@ export default async function Home() {
 
   return (
     <>
+      {/* ── Cijfers ──────────────────────────────────────────── */}
+      <section className="bg-navy-950" aria-labelledby="cijfers-titel">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <h2 id="cijfers-titel" className="sr-only">
+            De omvang van het probleem in cijfers
+          </h2>
+          <div className="grid gap-10 text-center sm:grid-cols-3 sm:gap-6">
+            {home.statistieken.map((stat, i) => (
+              <Reveal key={stat.waarde} delay={i * 100}>
+                <p className="text-4xl font-extrabold text-white sm:text-5xl">
+                  {stat.waarde}
+                </p>
+                <p className="mx-auto mt-3 max-w-xs text-sm leading-6 text-slate-400">
+                  {stat.tekst}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white">
         <div
@@ -36,35 +57,29 @@ export default async function Home() {
         />
         <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-24 lg:pb-28">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-blue-800 uppercase">
-              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-              {home.heroBadge}
-            </p>
-            <h1 className="mt-6 text-4xl font-extrabold text-slate-950 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.1]">
+            <h1 className="text-4xl font-extrabold text-slate-950 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.1]">
               {home.heroTitel}
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
               {home.heroTekst}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/technologie"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-md transition-colors hover:bg-blue-800"
-              >
-                Ontdek de technologie
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/patent"
-                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:border-slate-400 hover:bg-slate-50"
-              >
-                Bekijk het patent
-              </Link>
-            </div>
           </div>
 
           {/* 2FA-validatie visual */}
           <Reveal className="mt-14 lg:mt-0" delay={150}>
+            <div className="mx-auto mb-4 flex max-w-md flex-wrap items-center justify-between gap-2">
+              <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-blue-800 uppercase">
+                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                {home.heroBadge}
+              </p>
+              <Link
+                href="/octrooi"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
+              >
+                Octrooigegevens
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
             <div
               className="mx-auto max-w-md rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/60 backdrop-blur"
               aria-label="Illustratie: het CPS-programma vergelijkt de RFID-boodschappenlijst met de QR-boodschappenlijst"
@@ -129,27 +144,6 @@ export default async function Home() {
               </div>
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── Cijfers ──────────────────────────────────────────── */}
-      <section className="bg-navy-950" aria-labelledby="cijfers-titel">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <h2 id="cijfers-titel" className="sr-only">
-            De omvang van het probleem in cijfers
-          </h2>
-          <div className="grid gap-10 text-center sm:grid-cols-3 sm:gap-6">
-            {home.statistieken.map((stat, i) => (
-              <Reveal key={stat.waarde} delay={i * 100}>
-                <p className="text-4xl font-extrabold text-white sm:text-5xl">
-                  {stat.waarde}
-                </p>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-6 text-slate-400">
-                  {stat.tekst}
-                </p>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 

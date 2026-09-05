@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   Radio,
-  Recycle,
   ScanLine,
   ShieldCheck,
   XCircle,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import SituationTabs from "@/components/SituationTabs";
+import SystemDiagram from "@/components/SystemDiagram";
 import { getInhoud } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -45,15 +45,21 @@ export default async function TechnologiePage() {
             </p>
           </div>
           <div className="mt-12 lg:mt-0">
-            <Image
-              src="/images/zelfscan-zone.jpg"
-              alt="Moderne zelfscan-zone in een supermarkt met witte kiosken, een loopband en glazen beveiligingspoortjes in blauwe accentverlichting"
-              width={1600}
-              height={1073}
-              priority
-              className="rounded-2xl border border-white/10 shadow-2xl shadow-black/40"
-              sizes="(max-width: 1024px) 100vw, 560px"
-            />
+            <div className="rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/40">
+              <Image
+                src="/images/winkeldiefstal-illustratie.jpg"
+                alt="Illustratie: een klant verbergt een product in de jas terwijl een andere klant met tas door de antidiefstalpoortjes loopt"
+                width={612}
+                height={408}
+                priority
+                className="w-full rounded-lg"
+                sizes="(max-width: 1024px) 100vw, 520px"
+              />
+              <p className="mt-3 text-center text-xs text-slate-500">
+                Het gemak waarmee boodschappen niet worden afgerekend — het
+                probleem dat dual-technology bij de bron aanpakt.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -165,21 +171,12 @@ export default async function TechnologiePage() {
           </Reveal>
 
           <Reveal className="mt-12">
-            <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="overflow-x-auto">
-                <Image
-                  src="/system-diagram.png"
-                  alt="Schematische tekening van het CPS-zelfscankassasysteem in vier situaties: aanmelden bij de kassa, scannen en afrekenen, verlaten van de winkel met één winkelwagen, en verlaten van de winkel met twee winkelwagens. De tekening toont de beveiligingspoort, privacy poort, product stoppoort, camera, RFID-tag-lezer, retourbak en inpakplek."
-                  width={1536}
-                  height={1024}
-                  className="mx-auto min-w-[720px]"
-                  sizes="(max-width: 1280px) 100vw, 1216px"
-                />
-              </div>
-              <figcaption className="border-t border-slate-100 bg-slate-50 px-6 py-4 text-sm text-slate-500">
-                {technologie.diagramBijschrift}
-              </figcaption>
-            </figure>
+            <SystemDiagram
+              panelen={technologie.situaties.map((situatie, i) => ({
+                titel: situatie.titel,
+                bijschrift: technologie.situatieBijschriften[i],
+              }))}
+            />
           </Reveal>
 
           <Reveal className="mt-10">
@@ -188,46 +185,8 @@ export default async function TechnologiePage() {
         </div>
       </section>
 
-      {/* ── Statiegeld ───────────────────────────────────────── */}
-      <section className="bg-slate-50" aria-labelledby="statiegeld-titel">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
-            <Reveal>
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
-                <Recycle className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <h2
-                id="statiegeld-titel"
-                className="mt-5 text-3xl font-extrabold text-slate-950 sm:text-4xl"
-              >
-                {technologie.statiegeldTitel}
-              </h2>
-              <p className="mt-5 text-lg leading-8 text-slate-600">
-                {technologie.statiegeldTekst}
-              </p>
-            </Reveal>
-            <Reveal delay={100}>
-              <ul className="space-y-4">
-                {technologie.statiegeldPunten.map((punt) => (
-                  <li
-                    key={punt.slice(0, 40)}
-                    className="flex gap-3 rounded-xl border border-slate-200 bg-white p-5 text-sm leading-6.5 text-slate-600"
-                  >
-                    <CheckCircle2
-                      className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600"
-                      aria-hidden="true"
-                    />
-                    {punt}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
       {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="bg-white">
+      <section className="bg-slate-50">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="text-2xl font-extrabold text-slate-950 sm:text-3xl">

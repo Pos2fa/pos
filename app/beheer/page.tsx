@@ -26,6 +26,7 @@ const SECTIE_LABELS: Record<string, string> = {
   technologie: "De technologie",
   markt: "Markt & innovatie",
   patent: "Patent & samenwerking",
+  octrooi: "Octrooigegevens",
   contact: "Contactpagina",
 };
 
@@ -65,8 +66,11 @@ const VELD_LABELS: Record<string, string> = {
   cpsKassaPunten: "CPS-zelfscankassa — punten",
   systeemTitel: "Systeem in beeld — titel",
   systeemTekst: "Systeem in beeld — inleiding",
-  diagramBijschrift: "Bijschrift bij de tekening",
+  situatieBijschriften: "Bijschriften onder de tekening (per situatie)",
   situaties: "De vier situaties",
+  octrooiNummer: "Octrooinummer",
+  soort: "Soort",
+  status: "Status",
   statiegeldTitel: "Statiegeld — titel",
   statiegeldTekst: "Statiegeld — inleiding",
   statiegeldPunten: "Statiegeld — punten",

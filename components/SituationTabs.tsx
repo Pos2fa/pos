@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { DoorOpen, ScanBarcode, LogOut, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, DoorOpen, ScanBarcode, PackageCheck, ShoppingCart } from "lucide-react";
 
-const ICONEN = [DoorOpen, ScanBarcode, LogOut, Users];
+const ICONEN = [DoorOpen, ScanBarcode, PackageCheck, ShoppingCart];
 
 export type Situatie = {
   titel: string;
@@ -77,6 +78,27 @@ export default function SituationTabs({
             </li>
           ))}
         </ul>
+
+        <div className="mt-6 flex justify-end border-t border-slate-100 pt-4">
+          {active < situaties.length - 1 ? (
+            <button
+              type="button"
+              onClick={() => setActive(active + 1)}
+              className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
+            >
+              Volgende: situatie {active + 2} — {situaties[active + 1].titel}
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </button>
+          ) : (
+            <Link
+              href="/markt"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
+            >
+              Verder naar Markt &amp; innovatie
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

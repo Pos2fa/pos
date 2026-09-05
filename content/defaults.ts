@@ -12,6 +12,7 @@ export const standaardInhoud = {
       "Proactieve diefstalpreventie voor zelfscankassa's door tweevoudige artikelauthenticatie (2FA) met dual-technology.",
     contactEmail: "info@pos-2fa-intermediary.com",
     patentTitel: "Method and System for self-checkout at a point of sale",
+    octrooiNummer: "NL4000008",
   },
 
   home: {
@@ -164,17 +165,21 @@ export const standaardInhoud = {
       "Het winkeldiefstalbestendige CPS-zelfscankassasysteem in beeld",
     systeemTekst:
       "Het in het patent “Method and System for self-checkout at a point of sale” beschreven Cyber-Physical System stuurt de beveiligingspoort, de privacy poort en de product stoppoort aan, en combineert camera, RFID-lezer en QR-scanner. Vier situaties beschrijven de volledige werking — van aanmelden tot verlaten van de winkel.",
-    diagramBijschrift:
-      "De vier situaties van het CPS-zelfscankassasysteem, zoals beschreven in het patent. Het systeem is na iedere transactie direct klaar voor een nieuwe klant.",
+    situatieBijschriften: [
+      "De vrije kassa is te herkennen aan de open privacy poort. Het inrijden met de winkelwagen kan tot aan de dichte beveiligingspoort. Na een druk op de startknop zal het systeem opgestart worden. De privacy poort en de product stoppoort worden daarmee gesloten.",
+      "Als na het scannen de betaling is afgerond, controleert het systeem of de voorgaande klant de uitgang verlaten heeft. Pas als dit gebeurd is wordt de beveiligingspoort geopend. Na het passeren van de winkelwagen gaat de beveiligingspoort dicht, en gaan de product stoppoort en privacy poort open.",
+      "De klant pakt haar boodschappen in. De camera signaleert als ze hiermee klaar is en samen met de winkelwagen de uitgang verlaten heeft. Daarna wordt de transactie afgesloten en is het systeem klaar voor een nieuwe klant.",
+      "Tot het moment dat de camera vastgesteld heeft dat de oude klant de uitgang verlaten heeft, blijft de product stoppoort gesloten. Daarmee wordt voorkomen dat de boodschappen van de nieuwe klant in de verkeerde tas belanden.",
+    ],
     situaties: [
       {
-        titel: "Aanmelden bij de kassa",
+        titel: "Aanmelden bij kassa",
         intro:
           "De vrije kassa is te herkennen aan de open privacy poort. De klant rijdt met de winkelwagen naar binnen, tot aan de gesloten beveiligingspoort.",
         punten: [
           "De beveiligingspoort kan maar op twee manieren geopend worden: door een winkelbediende, of door het CPS-systeem — na het afrekenen, of wanneer een klant de winkel zonder aankopen wil verlaten.",
           "Wie de winkel zonder aankopen wil verlaten drukt op de knop ‘ik wil de winkel verlaten’. De privacy poort en de product stoppoort sluiten; de camera controleert winkelwagen of mandje, terwijl de RFID-lezer controleert of er producten met een RFID-code aanwezig zijn.",
-          "Bevat de winkelwagen producten, dan vraagt het systeem of de klant wil afrekenen of de producten wil retourneren. Bij retour begeleidt het systeem de klant stap voor stap en wordt een winkelbediende opgeroepen voor assistentie.",
+          "Bevat de winkelwagen producten, dan vraagt het systeem of de klant wil afrekenen of de producten wil retourneren. Bij retour begeleidt het systeem de klant stap voor stap.",
           "Worden er wel RFID-codes gedetecteerd bij een lege winkelwagen, of producten zonder enige RFID-code, dan wordt direct de beveiliging ingeschakeld: er is dan mogelijk sprake van voorgenomen fraude of gedeactiveerde tags.",
           "Klanten die met de app of handscanner hebben gescand, rekenen af via een aparte zuil. De RFID-scanner controleert daar eerst of alle producten daadwerkelijk gescand zijn.",
           "Afrekenen kan alleen individueel of als groep — het ‘geitenpaadje’ om achter wachtende klanten langs de winkel uit te lopen bestaat niet meer.",
@@ -189,12 +194,13 @@ export const standaardInhoud = {
           "De klant scant vervolgens de producten één voor één. Bij iedere scan controleert het CPS-systeem of het product op de RFID-boodschappenlijst staat én of de QR-code overeenkomt met de unieke code in de voorraadbeheerdatabase van de winkel.",
           "Een product dat de klant zelf al bij binnenkomst bezat, wordt herkend en uit de RFID-boodschappenlijst verwijderd. Staat een gescand product niet op de lijst, dan wordt de beveiliging gewaarschuwd — bijvoorbeeld bij een beschadigde RFID-code.",
           "Na iedere geslaagde controle wordt de RFID-tag-decoder geactiveerd; daarna mag het volgende product gescand worden. De klant plaatst het gescande product op de band.",
-          "Na de knop ‘einde scan’ kan er betaald worden met de betaalmethode naar keuze. Blijkt uit de camera en de RFID-lijst dat er nog producten onbetaald zijn, dan wordt de beveiliging ingeschakeld.",
+          "Mocht uit de RFID-boodschappenlijst blijken dat er, na het indrukken van de ‘einde scan’ knop, nog producten onbetaald zijn, dan wordt de klant hier door het CPS-systeem ter correctie op gewezen. Zo nodig wordt de beveiliging ingeschakeld.",
+          "De beveiligingspoort opent zich als alle boodschappen correct gescand en afgerekend zijn. Pas dan kunnen de boodschappen ingepakt en de winkel verlaten worden.",
           "Afbreken kan uitsluitend via de knop ‘producten retour’ — bijvoorbeeld wanneer een klant besluit bepaalde producten niet te kopen, of bij een kassa met een maximum aantal producten.",
         ],
       },
       {
-        titel: "Verlaten van de winkel",
+        titel: "Inpakken boodschappen",
         intro:
           "Zodra de betaling is afgerond opent de beveiligingspoort om de klant met de lege winkelwagen door te laten — en sluit direct daarna weer, gecontroleerd door de camera.",
         punten: [
@@ -204,7 +210,7 @@ export const standaardInhoud = {
         ],
       },
       {
-        titel: "Twee klanten tegelijk",
+        titel: "2 winkelwagens",
         intro:
           "In de huidige situatie is het inpakken bij de zelfscankassa tijdrovend — zeker bij een steekproefcontrole — waardoor de volgende klant onnodig lang moet wachten.",
         punten: [
@@ -214,22 +220,13 @@ export const standaardInhoud = {
         ],
       },
     ],
-    statiegeldTitel: "Ook een innamepunt voor statiegeldverpakkingen",
-    statiegeldTekst:
-      "Het tekort aan inleverpunten voor statiegeldverpakkingen kan, zo nodig, voor een belangrijk deel met het CPS-zelfscankassasysteem worden opgelost. Iedere met dual-technology beveiligde zelfscankassa kan daarmee ook dienen als innamepunt voor statiegeldproducten.",
-    statiegeldPunten: [
-      "Bij het scannen van de boodschappen stelt het systeem via de voorraadbeheerdatabase vast of het om een statiegeldverpakking gaat. De RFID-tag wordt dan niet gedeactiveerd; in plaats daarvan activeert het CPS de code van een aan/uit-schakelaar die alleen op RFID-tags van statiegeldverpakkingen zit.",
-      "Via de knop ‘statiegeld inleveren’ start de klant later het inneemproces. Omdat de RFID-tags nog actief zijn en de aan/uit-schakelaar aanstaat, kan dezelfde scanprocedure worden gevolgd — nu met specifieke RFID- en QR-verpakkingslijsten in plaats van boodschappenlijsten.",
-      "Een extra poortje voert de lege verpakkingen via een eigen loopband af naar een geschikte plaats, gescheiden van de boodschappen.",
-      "Wordt tijdens het boodschappen scannen per ongeluk een retour-statiegeldverpakking aangeboden, dan herkent het CPS dit aan de aan/uit-schakelaar en corrigeert het automatisch — zo wordt voorkomen dat een lege verpakking als aankoop wordt verrekend.",
-    ],
     ctaTitel: "Benieuwd hoe deze technologie aansluit op de retailmarkt?",
   },
 
   markt: {
     introTitel: "Point of Sale-innovaties die ertoe doen",
     introTekst:
-      "Vijftig jaar POS-innovatie maakte van de lokale buurtwinkel een internationale retailketen. Iedere sprong — barcode, zelfscan, QR-code, RFID — veranderde het afrekenen ingrijpend. De volgende stap: het afrekenen ook betrouwbaar maken.",
+      "Vijftig jaar POS-innovatie maakte van de lokale buurtwinkel een internationale retailketen. Iedere sprong — barcode, zelfscan, QR-code, RFID — veranderde het afrekenen ingrijpend. De volgende stap: het afrekenen aan de zelfscankassa ook betrouwbaar maken.",
     tijdlijn: [
       {
         periode: "±50 jaar geleden",
@@ -274,6 +271,15 @@ export const standaardInhoud = {
     inleverpuntTitel: "De CPS-kassa als inleverpunt",
     inleverpuntTekst:
       "Dit tekort kan, zo nodig, voor een belangrijk deel worden opgelost door het aanpassen van de CPS-programmatuur: iedere met dual-technology beveiligde zelfscankassa kan daarmee ook geschikt worden gemaakt als innamepunt voor statiegeldproducten.",
+    statiegeldTitel: "Zo werkt de statiegeldinname",
+    statiegeldTekst:
+      "Het tekort aan inleverpunten voor statiegeldverpakkingen kan, zo nodig, voor een belangrijk deel met het CPS-zelfscankassasysteem worden opgelost. Iedere met dual-technology beveiligde zelfscankassa kan daarmee ook dienen als innamepunt voor statiegeldproducten.",
+    statiegeldPunten: [
+      "Bij het scannen van de boodschappen stelt het systeem via de voorraadbeheerdatabase vast of het om een statiegeldverpakking gaat. De RFID-tag wordt dan niet gedeactiveerd; in plaats daarvan activeert het CPS de code van een aan/uit-schakelaar die alleen op RFID-tags van statiegeldverpakkingen zit.",
+      "De klant kan later, bij het inleveren van de statiegeldverpakking, het inneemproces starten via de knop ‘inleveren statiegeld’. Omdat de RFID-tags nog actief zijn en de aan/uit-schakelaar aanstaat, kan dezelfde scanprocedure worden gevolgd — nu met specifieke RFID- en QR-verpakkingslijsten in plaats van boodschappenlijsten.",
+      "Een extra poortje voert de lege verpakkingen via een eigen loopband af naar een geschikte plaats, gescheiden van de boodschappen.",
+      "Wordt tijdens het boodschappen scannen per ongeluk een retour-statiegeldverpakking aangeboden, dan herkent het CPS dit aan de aan/uit-schakelaar en corrigeert het automatisch — zo wordt voorkomen dat een lege verpakking als aankoop wordt verrekend.",
+    ],
     wereldwijdTitel: "Aansluiting op wereldwijde retailontwikkelingen",
     wereldwijdTekst:
       "Gezien de huidige stand van de techniek — en mede dankzij de ervaring die wordt opgedaan met de wereldwijde invoering van de GS1 Digital Link QR-code — lijkt het voor de meeste producten van FMCG-retailers mogelijk om vanaf 2028 de met dual-technology beveiligde zelfscankassa economisch haalbaar in te voeren.",
@@ -301,7 +307,7 @@ export const standaardInhoud = {
     introTitel: "Het patent is geen eindpunt, maar juist het begin",
     introTekst:
       "De methode is niet ontwikkeld vanuit een commerciële ambitie, maar vanuit verwondering over het gemak waarmee, tijdens het gebruik van zelfscankassa’s, boodschappen niet worden afgerekend.",
-    patentLabel: "Gepubliceerd patent",
+    patentLabel: "Nederlands octrooi NL4000008",
     patentTekst:
       "Het patent beschrijft het Cyber-Physical System (CPS) waarmee winkeldiefstal bij de zelfscankassa proactief wordt voorkomen via tweevoudige artikelauthenticatie (2FA) — en waarmee de zelfscankassa door twee klanten tegelijkertijd gebruikt kan worden en statiegeldverpakkingen ingenomen en verrekend kunnen worden.",
     kenmerken: [
@@ -317,6 +323,14 @@ export const standaardInhoud = {
     ctaTitel: "Bent u de strategische partner die wij zoeken?",
     ctaTekst:
       "Bent u geïnteresseerd in het patent, een licentie of een strategische overname? Neem dan contact met ons op.",
+  },
+
+  octrooi: {
+    introTitel: "Octrooigegevens",
+    introTekst:
+      "De gegevens van het octrooi zoals geregistreerd bij het octrooibureau.",
+    soort: "Nederlands octrooi",
+    status: "Gepubliceerd",
   },
 
   contact: {

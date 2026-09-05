@@ -13,7 +13,15 @@ import {
   wachtwoordCorrect,
 } from "@/lib/auth";
 
-const PAGINAS = ["/", "/technologie", "/markt", "/patent", "/contact"];
+const PAGINAS = [
+  "/",
+  "/technologie",
+  "/markt",
+  "/patent",
+  "/octrooi",
+  "/anti-liquid-rfid-tag",
+  "/contact",
+];
 
 export async function inloggen(formData: FormData): Promise<void> {
   const invoer = formData.get("wachtwoord");
