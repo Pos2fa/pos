@@ -33,16 +33,16 @@ export default async function MarktPage() {
   return (
     <>
       {/* ── Intro ────────────────────────────────────────────── */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 pt-16 pb-14 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
+      <section className="bg-navy-950">
+        <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
-            <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
+            <p className="text-sm font-semibold tracking-wider text-blue-400 uppercase">
               Markt &amp; innovatie
             </p>
-            <h1 className="mt-3 text-4xl font-extrabold text-slate-950 sm:text-5xl">
+            <h1 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
               {markt.introTitel}
             </h1>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
+            <p className="mt-6 text-lg leading-8 text-slate-300">
               {markt.introTekst}
             </p>
           </div>
@@ -53,7 +53,7 @@ export default async function MarktPage() {
               width={1600}
               height={1073}
               priority
-              className="rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60"
+              className="rounded-2xl border border-white/10 shadow-2xl shadow-black/40"
               sizes="(max-width: 1024px) 100vw, 560px"
             />
           </div>
