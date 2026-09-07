@@ -59,15 +59,6 @@ export default function Logo({ variant = "dark", className }: LogoProps) {
           INTERMEDIARY
         </text>
       </g>
-      <line
-        x1="342"
-        y1="94"
-        x2="380"
-        y2="94"
-        stroke={ink}
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }

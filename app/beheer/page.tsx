@@ -68,6 +68,8 @@ const VELD_LABELS: Record<string, string> = {
   systeemTekst: "Systeem in beeld — inleiding",
   situatieBijschriften: "Bijschriften onder de tekening (per situatie)",
   situaties: "De vier situaties",
+  stappenplannen: "Stappenplannen (aparte pagina)",
+  alineas: "Stappen",
   octrooiNummer: "Octrooinummer",
   soort: "Soort",
   status: "Status",

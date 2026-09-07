@@ -79,7 +79,14 @@ export default function SituationTabs({
           ))}
         </ul>
 
-        <div className="mt-6 flex justify-end border-t border-slate-100 pt-4">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+          <Link
+            href={`/stappenplannen#situatie-${active + 1}`}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
+          >
+            Lees verder: het volledige stappenplan
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
           {active < situaties.length - 1 ? (
             <button
               type="button"

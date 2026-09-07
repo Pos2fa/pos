@@ -65,13 +65,13 @@ export default async function PatentPage() {
                 <p className="mt-5 max-w-xl text-base leading-7 text-slate-300">
                   {patent.patentTekst}
                 </p>
-                <ul className="mt-7 grid gap-3 sm:grid-cols-3">
+                <ul className="mt-7 flex flex-wrap gap-3">
                   {patent.kenmerken.map((kenmerk, i) => {
                     const Icoon = KENMERK_ICONEN[i % KENMERK_ICONEN.length];
                     return (
                       <li
                         key={kenmerk}
-                        className="flex items-center gap-2.5 rounded-xl bg-white/5 px-4 py-3 text-sm font-medium"
+                        className="inline-flex items-center gap-2.5 rounded-xl bg-white/5 px-4 py-3 text-sm font-medium"
                       >
                         <Icoon className="h-5 w-5 shrink-0 text-blue-300" aria-hidden="true" />
                         {kenmerk}

@@ -40,7 +40,7 @@ export default async function Home() {
                 <p className="text-4xl font-extrabold text-white sm:text-5xl">
                   {stat.waarde}
                 </p>
-                <p className="mx-auto mt-3 max-w-xs text-sm leading-6 text-slate-400">
+                <p className="mx-auto mt-3 max-w-sm text-base leading-7 text-slate-300">
                   {stat.tekst}
                 </p>
               </Reveal>

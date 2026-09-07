@@ -16,6 +16,7 @@ import {
 const PAGINAS = [
   "/",
   "/technologie",
+  "/stappenplannen",
   "/markt",
   "/patent",
   "/octrooi",
