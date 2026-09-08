@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   FileCheck2,
@@ -12,18 +13,43 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { getInhoud } from "@/lib/content";
-
-export const metadata: Metadata = {
-  title: "Patent & samenwerking",
-  description:
-    "Het patent 'Method and System for self-checkout at a point of sale' is geen eindpunt, maar het begin: POS-2FA-Intermediary zoekt een strategische koper of licentiepartner voor wereldwijde implementatie.",
-};
+import { isTaal, pad } from "@/lib/i18n";
 
 const KENMERK_ICONEN = [ShieldCheck, Users, Recycle];
 
-export default async function PatentPage() {
-  const inhoud = await getInhoud();
+const UI = {
+  nl: {
+    metaTitel: "Patent & samenwerking",
+    metaBeschrijving:
+      "Het patent 'Method and System for self-checkout at a point of sale' is geen eindpunt, maar het begin: POS-2FA-Intermediary zoekt een strategische koper of licentiepartner voor wereldwijde implementatie.",
+    kicker: "Patent & samenwerking",
+    contact: "Neem contact op",
+    eerstTechnologie: "Bekijk eerst de technologie",
+  },
+  en: {
+    metaTitel: "Patent & partnership",
+    metaBeschrijving:
+      "The patent 'Method and System for self-checkout at a point of sale' is not an end point but the beginning: POS-2FA-Intermediary is looking for a strategic buyer or licensing partner for worldwide implementation.",
+    kicker: "Patent & partnership",
+    contact: "Contact us",
+    eerstTechnologie: "See the technology first",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[taal]/patent">): Promise<Metadata> {
+  const { taal } = await params;
+  const ui = UI[isTaal(taal) ? taal : "nl"];
+  return { title: ui.metaTitel, description: ui.metaBeschrijving };
+}
+
+export default async function PatentPage({ params }: PageProps<"/[taal]/patent">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const inhoud = await getInhoud(taal);
   const { patent } = inhoud;
+  const ui = UI[taal];
 
   return (
     <>
@@ -32,7 +58,7 @@ export default async function PatentPage() {
         <div className="mx-auto max-w-7xl px-4 pt-16 pb-14 sm:px-6 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              Patent &amp; samenwerking
+              {ui.kicker}
             </p>
             <h1 className="mt-3 text-4xl font-extrabold text-slate-950 sm:text-5xl">
               {patent.introTitel}
@@ -125,17 +151,17 @@ export default async function PatentPage() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href={pad(taal, "/contact")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-base font-semibold text-white shadow-md transition-colors hover:bg-blue-800"
               >
-                Neem contact op
+                {ui.contact}
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
               <Link
-                href="/technologie"
+                href={pad(taal, "/technologie")}
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:bg-slate-100"
               >
-                Bekijk eerst de technologie
+                {ui.eerstTechnologie}
               </Link>
             </div>
           </Reveal>

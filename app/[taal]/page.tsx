@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   Camera,
@@ -18,13 +19,63 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { getInhoud } from "@/lib/content";
+import { isTaal, pad } from "@/lib/i18n";
 
 const PROBLEEM_ICONEN = [ClipboardList, Camera, UserRound, Siren];
 const STAP_ICONEN = [Radio, ScanLine, ShieldCheck];
 const VOORDEEL_ICONEN = [Shield, HeartHandshake, Gauge, Recycle, CheckCircle2, Siren];
 
-export default async function Home() {
-  const { home } = await getInhoud();
+const UI = {
+  nl: {
+    cijfersSr: "De omvang van het probleem in cijfers",
+    octrooi: "Octrooigegevens",
+    visualAria:
+      "Illustratie: het CPS-programma vergelijkt de RFID-boodschappenlijst met de QR-boodschappenlijst",
+    kassa: "CPS-zelfscankassa",
+    actief: "2FA actief",
+    rfidLijst: "RFID-lijst",
+    qrLijst: "QR-lijst",
+    geslaagd: "2FA-validatie geslaagd",
+    geslaagdTekst:
+      "Beide boodschappenlijsten komen overeen — betaling kan worden afgerond.",
+    probleem: "Het probleem",
+    fotoAlt:
+      "Klant scant een verpakking met QR-code bij een zelfscankassa; de rode scanlijn valt over de code",
+    oplossing: "De oplossing",
+    stap: "Stap",
+    bekijkSysteem: "Bekijk het volledige systeem",
+    waarom: "Waarom dit werkt",
+    leesPatent: "Lees over het patent",
+    contact: "Neem contact op",
+  },
+  en: {
+    cijfersSr: "The scale of the problem in figures",
+    octrooi: "Patent details",
+    visualAria:
+      "Illustration: the CPS program compares the RFID shopping list with the QR shopping list",
+    kassa: "CPS self-checkout",
+    actief: "2FA active",
+    rfidLijst: "RFID list",
+    qrLijst: "QR list",
+    geslaagd: "2FA validation passed",
+    geslaagdTekst: "Both shopping lists match — payment can be completed.",
+    probleem: "The problem",
+    fotoAlt:
+      "Customer scans a package with a QR code at a self-checkout; the red scan line falls over the code",
+    oplossing: "The solution",
+    stap: "Step",
+    bekijkSysteem: "See the full system",
+    waarom: "Why this works",
+    leesPatent: "Read about the patent",
+    contact: "Contact us",
+  },
+} as const;
+
+export default async function Home({ params }: PageProps<"/[taal]">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const { home } = await getInhoud(taal);
+  const ui = UI[taal];
 
   return (
     <>
@@ -32,7 +83,7 @@ export default async function Home() {
       <section className="bg-navy-950" aria-labelledby="cijfers-titel">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <h2 id="cijfers-titel" className="sr-only">
-            De omvang van het probleem in cijfers
+            {ui.cijfersSr}
           </h2>
           <div className="grid gap-10 text-center sm:grid-cols-3 sm:gap-6">
             {home.statistieken.map((stat, i) => (
@@ -73,30 +124,28 @@ export default async function Home() {
                 {home.heroBadge}
               </p>
               <Link
-                href="/octrooi"
+                href={pad(taal, "/octrooi")}
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
               >
-                Octrooigegevens
+                {ui.octrooi}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
             <div
               className="mx-auto max-w-md rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/60 backdrop-blur"
-              aria-label="Illustratie: het CPS-programma vergelijkt de RFID-boodschappenlijst met de QR-boodschappenlijst"
+              aria-label={ui.visualAria}
             >
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <p className="text-sm font-bold text-navy-900">
-                  CPS-zelfscankassa
-                </p>
+                <p className="text-sm font-bold text-navy-900">{ui.kassa}</p>
                 <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                  2FA actief
+                  {ui.actief}
                 </span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-slate-50 p-4">
                   <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase">
                     <Radio className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
-                    RFID-lijst
+                    {ui.rfidLijst}
                   </p>
                   <ul className="mt-3 space-y-2">
                     {[92, 74, 84].map((w) => (
@@ -114,7 +163,7 @@ export default async function Home() {
                 <div className="rounded-xl bg-slate-50 p-4">
                   <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase">
                     <QrCode className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
-                    QR-lijst
+                    {ui.qrLijst}
                   </p>
                   <ul className="mt-3 space-y-2">
                     {[92, 74, 84].map((w) => (
@@ -134,12 +183,9 @@ export default async function Home() {
                 <CheckCircle2 className="h-6 w-6 shrink-0 text-emerald-600" aria-hidden="true" />
                 <div>
                   <p className="text-sm font-semibold text-emerald-900">
-                    2FA-validatie geslaagd
+                    {ui.geslaagd}
                   </p>
-                  <p className="text-xs text-emerald-700">
-                    Beide boodschappenlijsten komen overeen — betaling kan
-                    worden afgerond.
-                  </p>
+                  <p className="text-xs text-emerald-700">{ui.geslaagdTekst}</p>
                 </div>
               </div>
             </div>
@@ -153,7 +199,7 @@ export default async function Home() {
           <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <Reveal className="max-w-3xl">
               <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-                Het probleem
+                {ui.probleem}
               </p>
               <h2
                 id="probleem-titel"
@@ -168,7 +214,7 @@ export default async function Home() {
             <Reveal delay={100}>
               <Image
                 src="/images/qr-scan.jpg"
-                alt="Klant scant een verpakking met QR-code bij een zelfscankassa; de rode scanlijn valt over de code"
+                alt={ui.fotoAlt}
                 width={1600}
                 height={1073}
                 className="rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/60"
@@ -205,7 +251,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <Reveal className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              De oplossing
+              {ui.oplossing}
             </p>
             <h2
               id="oplossing-titel"
@@ -229,7 +275,7 @@ export default async function Home() {
                         <Icoon className="h-6 w-6" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-bold tracking-wider text-blue-700 uppercase">
-                        Stap {i + 1}
+                        {ui.stap} {i + 1}
                       </span>
                     </div>
                     <h3 className="mt-5 text-lg font-bold text-slate-900">
@@ -250,10 +296,10 @@ export default async function Home() {
                 {home.kassiereNoot}
               </p>
               <Link
-                href="/technologie"
+                href={pad(taal, "/technologie")}
                 className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
               >
-                Bekijk het volledige systeem
+                {ui.bekijkSysteem}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -266,7 +312,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <Reveal className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              Waarom dit werkt
+              {ui.waarom}
             </p>
             <h2
               id="voordelen-titel"
@@ -314,17 +360,17 @@ export default async function Home() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/patent"
+                href={pad(taal, "/patent")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-500"
               >
-                Lees over het patent
+                {ui.leesPatent}
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
               <Link
-                href="/contact"
+                href={pad(taal, "/contact")}
                 className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
               >
-                Neem contact op
+                {ui.contact}
               </Link>
             </div>
           </Reveal>

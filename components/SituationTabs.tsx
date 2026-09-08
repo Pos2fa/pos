@@ -3,8 +3,28 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, DoorOpen, ScanBarcode, PackageCheck, ShoppingCart } from "lucide-react";
+import { pad, type Taal } from "@/lib/i18n";
 
 const ICONEN = [DoorOpen, ScanBarcode, PackageCheck, ShoppingCart];
+
+const UI = {
+  nl: {
+    tablijst: "De vier situaties van het CPS-zelfscankassasysteem",
+    situatie: "Situatie",
+    leesVerder: (n: number) =>
+      `Lees verder: het volledige situatie ${n} stappenplan`,
+    volgende: (n: number, titel: string) => `Volgende: situatie ${n} — ${titel}`,
+    naarMarkt: "Verder naar Markt & innovatie",
+  },
+  en: {
+    tablijst: "The four situations of the CPS self-checkout system",
+    situatie: "Situation",
+    leesVerder: (n: number) =>
+      `Read on: the full situation ${n} step-by-step guide`,
+    volgende: (n: number, titel: string) => `Next: situation ${n} — ${titel}`,
+    naarMarkt: "On to Market & innovation",
+  },
+} as const;
 
 export type Situatie = {
   titel: string;
@@ -14,17 +34,20 @@ export type Situatie = {
 
 export default function SituationTabs({
   situaties,
+  taal,
 }: {
   situaties: Situatie[];
+  taal: Taal;
 }) {
   const [active, setActive] = useState(0);
   const current = situaties[active];
+  const ui = UI[taal];
 
   return (
     <div>
       <div
         role="tablist"
-        aria-label="De vier situaties van het CPS-zelfscankassasysteem"
+        aria-label={ui.tablijst}
         className="grid grid-cols-2 gap-2 lg:grid-cols-4"
       >
         {situaties.map((situatie, i) => {
@@ -49,7 +72,7 @@ export default function SituationTabs({
                   selected ? "text-blue-200" : "text-blue-700"
                 }`}
               >
-                Situatie {i + 1}
+                {ui.situatie} {i + 1}
               </span>
               <span className="flex items-center gap-2 text-sm font-semibold sm:text-base">
                 <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -81,10 +104,10 @@ export default function SituationTabs({
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
           <Link
-            href={`/stappenplannen#situatie-${active + 1}`}
+            href={pad(taal, `/stappenplannen/situatie-${active + 1}`)}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
           >
-            Lees verder: het volledige stappenplan
+            {ui.leesVerder(active + 1)}
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           {active < situaties.length - 1 ? (
@@ -93,15 +116,15 @@ export default function SituationTabs({
               onClick={() => setActive(active + 1)}
               className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
             >
-              Volgende: situatie {active + 2} — {situaties[active + 1].titel}
+              {ui.volgende(active + 2, situaties[active + 1].titel)}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           ) : (
             <Link
-              href="/markt"
+              href={pad(taal, "/markt")}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
             >
-              Verder naar Markt &amp; innovatie
+              {ui.naarMarkt}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           )}

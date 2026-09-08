@@ -1,24 +1,60 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArrowRight, FileCheck2, Handshake } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { getInhoud } from "@/lib/content";
+import { isTaal, pad } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Octrooigegevens",
-  description:
-    "De gegevens van het Nederlandse octrooi NL4000008 — Method and System for self-checkout at a point of sale — zoals geregistreerd bij het octrooibureau.",
-};
+const UI = {
+  nl: {
+    metaTitel: "Octrooigegevens",
+    metaBeschrijving:
+      "De gegevens van het Nederlandse octrooi NL4000008 — Method and System for self-checkout at a point of sale — zoals geregistreerd bij het octrooibureau.",
+    register: "Registergegevens",
+    nummer: "Octrooinummer",
+    soort: "Soort",
+    status: "Status",
+    titel: "Titel",
+    omschrijving: "Omschrijving",
+    naarPatent: "Patent & samenwerking",
+  },
+  en: {
+    metaTitel: "Patent details",
+    metaBeschrijving:
+      "The details of Dutch patent NL4000008 — Method and System for self-checkout at a point of sale — as registered at the patent office.",
+    register: "Register details",
+    nummer: "Patent number",
+    soort: "Type",
+    status: "Status",
+    titel: "Title",
+    omschrijving: "Description",
+    naarPatent: "Patent & partnership",
+  },
+} as const;
 
-export default async function OctrooiPage() {
-  const inhoud = await getInhoud();
+export async function generateMetadata({
+  params,
+}: PageProps<"/[taal]/octrooi">): Promise<Metadata> {
+  const { taal } = await params;
+  const ui = UI[isTaal(taal) ? taal : "nl"];
+  return { title: ui.metaTitel, description: ui.metaBeschrijving };
+}
+
+export default async function OctrooiPage({
+  params,
+}: PageProps<"/[taal]/octrooi">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const inhoud = await getInhoud(taal);
   const { octrooi } = inhoud;
+  const ui = UI[taal];
 
   const gegevens = [
-    { label: "Octrooinummer", waarde: inhoud.algemeen.octrooiNummer },
-    { label: "Soort", waarde: octrooi.soort },
-    { label: "Status", waarde: octrooi.status },
-    { label: "Titel", waarde: `“${inhoud.algemeen.patentTitel}”` },
+    { label: ui.nummer, waarde: inhoud.algemeen.octrooiNummer },
+    { label: ui.soort, waarde: octrooi.soort },
+    { label: ui.status, waarde: octrooi.status },
+    { label: ui.titel, waarde: `“${inhoud.algemeen.patentTitel}”` },
   ];
 
   return (
@@ -39,7 +75,7 @@ export default async function OctrooiPage() {
             <div className="flex items-center gap-3 border-b border-slate-100 bg-navy-950 px-6 py-4">
               <FileCheck2 className="h-5 w-5 text-blue-300" aria-hidden="true" />
               <p className="text-sm font-bold tracking-wider text-white uppercase">
-                Registergegevens
+                {ui.register}
               </p>
             </div>
             <dl className="divide-y divide-slate-100">
@@ -58,7 +94,7 @@ export default async function OctrooiPage() {
               ))}
               <div className="grid gap-1 px-6 py-4 sm:grid-cols-[200px_1fr] sm:gap-6">
                 <dt className="text-sm font-semibold text-slate-500">
-                  Omschrijving
+                  {ui.omschrijving}
                 </dt>
                 <dd className="text-sm leading-6 text-slate-700">
                   {inhoud.patent.patentTekst}
@@ -78,10 +114,10 @@ export default async function OctrooiPage() {
             </div>
             <div className="flex shrink-0 gap-3">
               <Link
-                href="/patent"
+                href={pad(taal, "/patent")}
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
               >
-                Patent &amp; samenwerking
+                {ui.naarPatent}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

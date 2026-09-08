@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   Barcode,
@@ -17,18 +18,51 @@ import {
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { getInhoud } from "@/lib/content";
-
-export const metadata: Metadata = {
-  title: "Markt & innovatie",
-  description:
-    "Van barcode tot GS1 Digital Link QR-code en RFID: de POS-innovaties die de retail veranderden — en hoe de 2FA-antidiefstalmethode daarop aansluit, in Nederland en wereldwijd.",
-};
+import { isTaal, pad } from "@/lib/i18n";
 
 const TIJDLIJN_ICONEN = [Barcode, ScanLine, QrCode, Globe2, Radio, ShieldCheck];
 const KAART_ICONEN = [Shirt, ShoppingBasket, ShieldCheck];
 
-export default async function MarktPage() {
-  const { markt } = await getInhoud();
+const UI = {
+  nl: {
+    metaTitel: "Markt & innovatie",
+    metaBeschrijving:
+      "Van barcode tot GS1 Digital Link QR-code en RFID: de POS-innovaties die de retail veranderden — en hoe de 2FA-antidiefstalmethode daarop aansluit, in Nederland en wereldwijd.",
+    kicker: "Markt & innovatie",
+    fotoAlt:
+      "Moderne zelfscan-zone in een supermarkt met veel open ruimte rond de kiosken en poortjes — er kan makkelijk langs de zelfscankassa gelopen worden",
+    tijdlijnAria: "Tijdlijn van POS-innovaties",
+    zoWerkt: "Zo werkt de statiegeldinname",
+    antiLiquid: "Anti-liquid RFID-tag",
+    naarPatent: "Patent & samenwerking",
+  },
+  en: {
+    metaTitel: "Market & innovation",
+    metaBeschrijving:
+      "From barcode to GS1 Digital Link QR code and RFID: the POS innovations that changed retail — and how the 2FA anti-theft method connects to them, in the Netherlands and worldwide.",
+    kicker: "Market & innovation",
+    fotoAlt:
+      "Modern self-scan zone in a supermarket with plenty of open space around the kiosks and gates — it is easy to walk past the self-checkout",
+    tijdlijnAria: "Timeline of POS innovations",
+    zoWerkt: "How the deposit-return intake works",
+    antiLiquid: "Anti-liquid RFID tag",
+    naarPatent: "Patent & partnership",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[taal]/markt">): Promise<Metadata> {
+  const { taal } = await params;
+  const ui = UI[isTaal(taal) ? taal : "nl"];
+  return { title: ui.metaTitel, description: ui.metaBeschrijving };
+}
+
+export default async function MarktPage({ params }: PageProps<"/[taal]/markt">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const { markt } = await getInhoud(taal);
+  const ui = UI[taal];
 
   return (
     <>
@@ -37,7 +71,7 @@ export default async function MarktPage() {
         <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-400 uppercase">
-              Markt &amp; innovatie
+              {ui.kicker}
             </p>
             <h1 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
               {markt.introTitel}
@@ -49,7 +83,7 @@ export default async function MarktPage() {
           <div className="mt-12 lg:mt-0">
             <Image
               src="/images/zelfscan-zone.jpg"
-              alt="Moderne zelfscan-zone in een supermarkt met veel open ruimte rond de kiosken en poortjes — er kan makkelijk langs de zelfscankassa gelopen worden"
+              alt={ui.fotoAlt}
               width={1600}
               height={1073}
               priority
@@ -61,7 +95,7 @@ export default async function MarktPage() {
       </section>
 
       {/* ── Tijdlijn ─────────────────────────────────────────── */}
-      <section className="bg-white" aria-label="Tijdlijn van POS-innovaties">
+      <section className="bg-white" aria-label={ui.tijdlijnAria}>
         <div className="mx-auto max-w-4xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
           <ol className="relative space-y-10 border-s-2 border-slate-200 ps-8 sm:ps-10">
             {markt.tijdlijn.map((item, i) => {
@@ -122,7 +156,7 @@ export default async function MarktPage() {
                   href="#statiegeld"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
                 >
-                  Zo werkt de statiegeldinname
+                  {ui.zoWerkt}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
@@ -194,11 +228,11 @@ export default async function MarktPage() {
                     </p>
                     {i === 1 && (
                       <Link
-                        href="/anti-liquid-rfid-tag"
+                        href={pad(taal, "/anti-liquid-rfid-tag")}
                         className="mt-5 inline-flex items-center justify-center gap-2 self-start rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
                       >
                         <FlaskConical className="h-4 w-4" aria-hidden="true" />
-                        Anti-liquid RFID-tag
+                        {ui.antiLiquid}
                       </Link>
                     )}
                   </div>
@@ -218,10 +252,10 @@ export default async function MarktPage() {
             </h2>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/patent"
+                href={pad(taal, "/patent")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-500"
               >
-                Patent &amp; samenwerking
+                {ui.naarPatent}
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
             </div>

@@ -2,9 +2,44 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import Logo from "./Logo";
 import { getInhoud } from "@/lib/content";
+import { pad, type Taal } from "@/lib/i18n";
 
-export default async function Footer() {
-  const inhoud = await getInhoud();
+const UI = {
+  nl: {
+    footernav: "Footernavigatie",
+    navigatie: "Navigatie",
+    links: [
+      { route: "/", label: "Home" },
+      { route: "/technologie", label: "De technologie" },
+      { route: "/markt", label: "Markt & innovatie" },
+      { route: "/patent", label: "Patent & samenwerking" },
+      { route: "/contact", label: "Contact" },
+    ],
+    contact: "Contact",
+    interesse: "Interesse in het patent of een licentie­samenwerking?",
+    rechten: "Alle rechten voorbehouden.",
+    patent: "Patent",
+  },
+  en: {
+    footernav: "Footer navigation",
+    navigatie: "Navigation",
+    links: [
+      { route: "/", label: "Home" },
+      { route: "/technologie", label: "The technology" },
+      { route: "/markt", label: "Market & innovation" },
+      { route: "/patent", label: "Patent & partnership" },
+      { route: "/contact", label: "Contact" },
+    ],
+    contact: "Contact",
+    interesse: "Interested in the patent or a licensing partnership?",
+    rechten: "All rights reserved.",
+    patent: "Patent",
+  },
+} as const;
+
+export default async function Footer({ taal }: { taal: Taal }) {
+  const inhoud = await getInhoud(taal);
+  const ui = UI[taal];
   return (
     <footer className="bg-navy-950 text-slate-300">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -16,49 +51,29 @@ export default async function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Footernavigatie">
+          <nav aria-label={ui.footernav}>
             <h2 className="text-sm font-semibold tracking-wide text-white uppercase">
-              Navigatie
+              {ui.navigatie}
             </h2>
             <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <Link href="/" className="transition-colors hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/technologie"
-                  className="transition-colors hover:text-white"
-                >
-                  De technologie
-                </Link>
-              </li>
-              <li>
-                <Link href="/markt" className="transition-colors hover:text-white">
-                  Markt &amp; innovatie
-                </Link>
-              </li>
-              <li>
-                <Link href="/patent" className="transition-colors hover:text-white">
-                  Patent &amp; samenwerking
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="transition-colors hover:text-white">
-                  Contact
-                </Link>
-              </li>
+              {ui.links.map((link) => (
+                <li key={link.route}>
+                  <Link
+                    href={pad(taal, link.route)}
+                    className="transition-colors hover:text-white"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
           <div>
             <h2 className="text-sm font-semibold tracking-wide text-white uppercase">
-              Contact
+              {ui.contact}
             </h2>
-            <p className="mt-4 text-sm leading-6 text-slate-400">
-              Interesse in het patent of een licentie&shy;samenwerking?
-            </p>
+            <p className="mt-4 text-sm leading-6 text-slate-400">{ui.interesse}</p>
             <a
               href={`mailto:${inhoud.algemeen.contactEmail}`}
               className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-white transition-colors hover:text-blue-300"
@@ -71,10 +86,11 @@ export default async function Footer() {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {new Date().getFullYear()} POS-2FA-Intermediary. Alle rechten
-            voorbehouden.
+            &copy; {new Date().getFullYear()} POS-2FA-Intermediary. {ui.rechten}
           </p>
-          <p>Patent: &ldquo;{inhoud.algemeen.patentTitel}&rdquo;</p>
+          <p>
+            {ui.patent}: &ldquo;{inhoud.algemeen.patentTitel}&rdquo;
+          </p>
         </div>
       </div>
     </footer>

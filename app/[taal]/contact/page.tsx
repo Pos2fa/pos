@@ -1,18 +1,44 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ArrowRight, FileCheck2, Handshake, Mail } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { getInhoud } from "@/lib/content";
+import { isTaal, pad } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Interesse in het patent of een licentiesamenwerking rond de 2FA-antidiefstalmethode voor zelfscankassa's? Neem contact op via info@pos-2fa-intermediary.com.",
-};
+const UI = {
+  nl: {
+    metaTitel: "Contact",
+    metaBeschrijving:
+      "Interesse in het patent of een licentiesamenwerking rond de 2FA-antidiefstalmethode voor zelfscankassa's? Neem contact op via info@pos-2fa-intermediary.com.",
+    kicker: "Contact",
+    leesMeer: "Lees meer",
+  },
+  en: {
+    metaTitel: "Contact",
+    metaBeschrijving:
+      "Interested in the patent or a licensing partnership around the 2FA anti-theft method for self-checkouts? Get in touch via info@pos-2fa-intermediary.com.",
+    kicker: "Contact",
+    leesMeer: "Read more",
+  },
+} as const;
 
-export default async function ContactPage() {
-  const inhoud = await getInhoud();
+export async function generateMetadata({
+  params,
+}: PageProps<"/[taal]/contact">): Promise<Metadata> {
+  const { taal } = await params;
+  const ui = UI[isTaal(taal) ? taal : "nl"];
+  return { title: ui.metaTitel, description: ui.metaBeschrijving };
+}
+
+export default async function ContactPage({
+  params,
+}: PageProps<"/[taal]/contact">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const inhoud = await getInhoud(taal);
   const { contact } = inhoud;
+  const ui = UI[taal];
 
   return (
     <>
@@ -20,7 +46,7 @@ export default async function ContactPage() {
         <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              Contact
+              {ui.kicker}
             </p>
             <h1 className="mt-3 text-4xl font-extrabold text-slate-950 sm:text-5xl">
               {contact.titel}
@@ -66,10 +92,10 @@ export default async function ContactPage() {
                       {contact.patentKaartTekst}
                     </p>
                     <Link
-                      href="/patent"
+                      href={pad(taal, "/patent")}
                       className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
                     >
-                      Lees meer
+                      {ui.leesMeer}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                   </div>

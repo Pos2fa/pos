@@ -3,8 +3,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { standaardInhoud, type Inhoud } from "@/content/defaults";
-import { bewaarInhoud, getInhoud } from "@/lib/content";
+import type { Inhoud } from "@/content/defaults";
+import { bewaarInhoud, getInhoud, standaardVoor } from "@/lib/content";
+import { isTaal, pad, type Taal } from "@/lib/i18n";
 import {
   SESSIE_COOKIE,
   beheerGeconfigureerd,
@@ -13,26 +14,22 @@ import {
   wachtwoordCorrect,
 } from "@/lib/auth";
 
-const PAGINAS = [
-  "/",
-  "/technologie",
-  "/stappenplannen",
-  "/markt",
-  "/patent",
-  "/octrooi",
-  "/anti-liquid-rfid-tag",
-  "/contact",
-];
+/** Leest de taal van het beheerformulier (verborgen veld). */
+function taalUitFormulier(formData: FormData): Taal {
+  const waarde = formData.get("taal");
+  return typeof waarde === "string" && isTaal(waarde) ? waarde : "nl";
+}
 
 export async function inloggen(formData: FormData): Promise<void> {
+  const taal = taalUitFormulier(formData);
   const invoer = formData.get("wachtwoord");
   if (!beheerGeconfigureerd()) {
-    redirect("/beheer?fout=configuratie");
+    redirect(pad(taal, "/beheer?fout=configuratie"));
   }
   if (typeof invoer !== "string" || !wachtwoordCorrect(invoer)) {
     // Kleine vertraging remt geautomatiseerd gokken af.
     await new Promise((klaar) => setTimeout(klaar, 800));
-    redirect("/beheer?fout=wachtwoord");
+    redirect(pad(taal, "/beheer?fout=wachtwoord"));
   }
   const { token, maxAgeSeconden } = maakSessieToken();
   const cookieStore = await cookies();
@@ -43,13 +40,14 @@ export async function inloggen(formData: FormData): Promise<void> {
     path: "/",
     maxAge: maxAgeSeconden,
   });
-  redirect("/beheer");
+  redirect(pad(taal, "/beheer"));
 }
 
-export async function uitloggen(): Promise<void> {
+export async function uitloggen(formData: FormData): Promise<void> {
+  const taal = taalUitFormulier(formData);
   const cookieStore = await cookies();
   cookieStore.delete(SESSIE_COOKIE);
-  redirect("/beheer");
+  redirect(pad(taal, "/beheer"));
 }
 
 /**
@@ -89,38 +87,35 @@ function bouwUitFormulier(
 }
 
 export async function bewaarTeksten(formData: FormData): Promise<void> {
+  const taal = taalUitFormulier(formData);
   if (!(await isIngelogd())) {
-    redirect("/beheer?fout=sessie");
+    redirect(pad(taal, "/beheer?fout=sessie"));
   }
-  const huidig = await getInhoud();
+  const huidig = await getInhoud(taal);
   const nieuw = bouwUitFormulier(huidig, formData, "") as Inhoud;
 
   try {
-    await bewaarInhoud(nieuw);
+    await bewaarInhoud(nieuw, taal);
   } catch {
-    redirect("/beheer?fout=opslag");
+    redirect(pad(taal, "/beheer?fout=opslag"));
   }
 
-  for (const pagina of PAGINAS) {
-    revalidatePath(pagina);
-  }
-  revalidatePath("/beheer");
-  redirect("/beheer?opgeslagen=1");
+  // Wist de cache van alle pagina's in beide talen.
+  revalidatePath("/", "layout");
+  redirect(pad(taal, "/beheer?opgeslagen=1"));
 }
 
 /** Zet alle teksten terug naar de originele documentteksten. */
-export async function herstelStandaard(): Promise<void> {
+export async function herstelStandaard(formData: FormData): Promise<void> {
+  const taal = taalUitFormulier(formData);
   if (!(await isIngelogd())) {
-    redirect("/beheer?fout=sessie");
+    redirect(pad(taal, "/beheer?fout=sessie"));
   }
   try {
-    await bewaarInhoud(standaardInhoud);
+    await bewaarInhoud(standaardVoor(taal), taal);
   } catch {
-    redirect("/beheer?fout=opslag");
+    redirect(pad(taal, "/beheer?fout=opslag"));
   }
-  for (const pagina of PAGINAS) {
-    revalidatePath(pagina);
-  }
-  revalidatePath("/beheer");
-  redirect("/beheer?opgeslagen=1");
+  revalidatePath("/", "layout");
+  redirect(pad(taal, "/beheer?opgeslagen=1"));
 }

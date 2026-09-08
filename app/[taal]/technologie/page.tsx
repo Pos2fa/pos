@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   Radio,
@@ -13,17 +14,60 @@ import Reveal from "@/components/Reveal";
 import SituationTabs from "@/components/SituationTabs";
 import SystemDiagram from "@/components/SystemDiagram";
 import { getInhoud } from "@/lib/content";
-
-export const metadata: Metadata = {
-  title: "De technologie",
-  description:
-    "De proactieve, met dual-technology beveiligde zelfscankassa: een Cyber-Physical System (CPS) vergelijkt QR-codes en RFID-tags via tweevoudige artikelauthenticatie (2FA).",
-};
+import { isTaal, pad } from "@/lib/i18n";
 
 const STAP_ICONEN = [Radio, ScanLine, ShieldCheck];
 
-export default async function TechnologiePage() {
-  const { technologie } = await getInhoud();
+const UI = {
+  nl: {
+    metaTitel: "De technologie",
+    metaBeschrijving:
+      "De proactieve, met dual-technology beveiligde zelfscankassa: een Cyber-Physical System (CPS) vergelijkt QR-codes en RFID-tags via tweevoudige artikelauthenticatie (2FA).",
+    kicker: "De technologie",
+    fotoAlt:
+      "Illustratie: een klant verbergt een product in de jas terwijl een andere klant met tas door de antidiefstalpoortjes loopt",
+    fotoBijschrift:
+      "Het gemak waarmee boodschappen niet worden afgerekend — het probleem dat dual-technology bij de bron aanpakt.",
+    stap: "Stap",
+    huidigeKassa: "De huidige zelfscankassa",
+    cpsKassa: "De CPS-zelfscankassa",
+    uitPatent: "Uit het patent",
+    naarMarkt: "Markt & innovatie",
+    naarPatent: "Patent & samenwerking",
+  },
+  en: {
+    metaTitel: "The technology",
+    metaBeschrijving:
+      "The proactive self-checkout secured with dual technology: a Cyber-Physical System (CPS) compares QR codes and RFID tags through two-factor article authentication (2FA).",
+    kicker: "The technology",
+    fotoAlt:
+      "Illustration: a customer hides a product in their coat while another customer with a bag walks through the anti-theft gates",
+    fotoBijschrift:
+      "The ease with which groceries go unpaid — the problem dual technology tackles at the source.",
+    stap: "Step",
+    huidigeKassa: "Today's self-checkout",
+    cpsKassa: "The CPS self-checkout",
+    uitPatent: "From the patent",
+    naarMarkt: "Market & innovation",
+    naarPatent: "Patent & partnership",
+  },
+} as const;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/[taal]/technologie">): Promise<Metadata> {
+  const { taal } = await params;
+  const ui = UI[isTaal(taal) ? taal : "nl"];
+  return { title: ui.metaTitel, description: ui.metaBeschrijving };
+}
+
+export default async function TechnologiePage({
+  params,
+}: PageProps<"/[taal]/technologie">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const { technologie } = await getInhoud(taal);
+  const ui = UI[taal];
 
   return (
     <>
@@ -32,7 +76,7 @@ export default async function TechnologiePage() {
         <div className="mx-auto max-w-7xl px-4 pt-16 pb-20 sm:px-6 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-14 lg:px-8 lg:pt-24">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-400 uppercase">
-              De technologie
+              {ui.kicker}
             </p>
             <h1 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
               {technologie.introTitel}
@@ -48,7 +92,7 @@ export default async function TechnologiePage() {
             <div className="rounded-2xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/40">
               <Image
                 src="/images/winkeldiefstal-illustratie.jpg"
-                alt="Illustratie: een klant verbergt een product in de jas terwijl een andere klant met tas door de antidiefstalpoortjes loopt"
+                alt={ui.fotoAlt}
                 width={612}
                 height={408}
                 priority
@@ -56,8 +100,7 @@ export default async function TechnologiePage() {
                 sizes="(max-width: 1024px) 100vw, 520px"
               />
               <p className="mt-3 text-center text-xs text-slate-500">
-                Het gemak waarmee boodschappen niet worden afgerekend — het
-                probleem dat dual-technology bij de bron aanpakt.
+                {ui.fotoBijschrift}
               </p>
             </div>
           </div>
@@ -87,7 +130,7 @@ export default async function TechnologiePage() {
                         <Icoon className="h-7 w-7" aria-hidden="true" />
                       </span>
                       <span className="mt-1 text-sm font-bold tracking-wider text-blue-700 uppercase sm:mt-0">
-                        Stap {i + 1}
+                        {ui.stap} {i + 1}
                       </span>
                     </div>
                     <div>
@@ -126,7 +169,7 @@ export default async function TechnologiePage() {
               <div className="h-full rounded-2xl border border-slate-200 bg-white p-7">
                 <p className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-500 uppercase">
                   <XCircle className="h-5 w-5 text-rose-500" aria-hidden="true" />
-                  De huidige zelfscankassa
+                  {ui.huidigeKassa}
                 </p>
                 <ul className="mt-5 space-y-3 text-base leading-7 text-slate-600">
                   {technologie.huidigeKassaPunten.map((punt) => (
@@ -139,7 +182,7 @@ export default async function TechnologiePage() {
               <div className="h-full rounded-2xl border border-blue-200 bg-white p-7">
                 <p className="flex items-center gap-2 text-sm font-bold tracking-wider text-blue-700 uppercase">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600" aria-hidden="true" />
-                  De CPS-zelfscankassa
+                  {ui.cpsKassa}
                 </p>
                 <ul className="mt-5 space-y-3 text-base leading-7 text-slate-600">
                   {technologie.cpsKassaPunten.map((punt) => (
@@ -157,7 +200,7 @@ export default async function TechnologiePage() {
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
           <Reveal className="max-w-3xl">
             <p className="text-sm font-semibold tracking-wider text-blue-700 uppercase">
-              Uit het patent
+              {ui.uitPatent}
             </p>
             <h2
               id="systeem-titel"
@@ -172,6 +215,7 @@ export default async function TechnologiePage() {
 
           <Reveal className="mt-12">
             <SystemDiagram
+              taal={taal}
               panelen={technologie.situaties.map((situatie, i) => ({
                 titel: situatie.titel,
                 bijschrift: technologie.situatieBijschriften[i],
@@ -180,7 +224,7 @@ export default async function TechnologiePage() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <SituationTabs situaties={technologie.situaties} />
+            <SituationTabs situaties={technologie.situaties} taal={taal} />
           </Reveal>
         </div>
       </section>
@@ -194,17 +238,17 @@ export default async function TechnologiePage() {
             </h2>
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
-                href="/markt"
+                href={pad(taal, "/markt")}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-800"
               >
-                Markt &amp; innovatie
+                {ui.naarMarkt}
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
               <Link
-                href="/patent"
+                href={pad(taal, "/patent")}
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:bg-slate-50"
               >
-                Patent &amp; samenwerking
+                {ui.naarPatent}
               </Link>
             </div>
           </Reveal>

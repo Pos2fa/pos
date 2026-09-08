@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   AlertCircle,
   CheckCircle2,
   ExternalLink,
   KeyRound,
+  Languages,
   LogOut,
   RotateCcw,
   Save,
 } from "lucide-react";
 import { getInhoud, kvGeconfigureerd } from "@/lib/content";
 import { beheerGeconfigureerd, isIngelogd } from "@/lib/auth";
+import { isTaal, pad as taalPad, type Taal } from "@/lib/i18n";
 import { bewaarTeksten, herstelStandaard, inloggen, uitloggen } from "./actions";
 
 export const metadata: Metadata = {
@@ -172,9 +175,37 @@ function Velden({ pad, waarde }: { pad: string; waarde: unknown }) {
   return null;
 }
 
+/* ── Taaltabs ─────────────────────────────────────────────── */
+
+function TaalTabs({ taal }: { taal: Taal }) {
+  const tabs: { taal: Taal; label: string }[] = [
+    { taal: "nl", label: "Nederlandse teksten" },
+    { taal: "en", label: "Engelse teksten (English)" },
+  ];
+  return (
+    <div className="mt-6 flex items-center gap-2 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm">
+      <Languages className="ml-2 h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+      {tabs.map((tab) => (
+        <Link
+          key={tab.taal}
+          href={taalPad(tab.taal, "/beheer")}
+          aria-current={tab.taal === taal ? "page" : undefined}
+          className={`flex-1 rounded-lg px-4 py-2 text-center text-sm font-semibold transition-colors ${
+            tab.taal === taal
+              ? "bg-blue-700 text-white shadow-sm"
+              : "text-slate-700 hover:bg-slate-100"
+          }`}
+        >
+          {tab.label}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 /* ── Inlogscherm ──────────────────────────────────────────── */
 
-function InlogScherm({ fout }: { fout?: string }) {
+function InlogScherm({ taal, fout }: { taal: Taal; fout?: string }) {
   return (
     <div className="mx-auto flex max-w-md flex-col justify-center px-4 py-24">
       <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-lg sm:p-10">
@@ -220,6 +251,7 @@ function InlogScherm({ fout }: { fout?: string }) {
         )}
 
         <form action={inloggen} className="mt-6">
+          <input type="hidden" name="taal" value={taal} />
           <label
             htmlFor="wachtwoord"
             className="text-sm font-semibold text-slate-800"
@@ -243,7 +275,10 @@ function InlogScherm({ fout }: { fout?: string }) {
         </form>
       </div>
       <p className="mt-6 text-center text-sm text-slate-500">
-        <Link href="/" className="font-medium text-blue-700 hover:text-blue-800">
+        <Link
+          href={taalPad(taal, "/")}
+          className="font-medium text-blue-700 hover:text-blue-800"
+        >
           ← Terug naar de website
         </Link>
       </p>
@@ -254,17 +289,20 @@ function InlogScherm({ fout }: { fout?: string }) {
 /* ── Beheerpagina ─────────────────────────────────────────── */
 
 export default async function BeheerPagina({
+  params,
   searchParams,
-}: PageProps<"/beheer">) {
-  const params = await searchParams;
-  const fout = typeof params.fout === "string" ? params.fout : undefined;
+}: PageProps<"/[taal]/beheer">) {
+  const { taal } = await params;
+  if (!isTaal(taal)) notFound();
+  const zoekParams = await searchParams;
+  const fout = typeof zoekParams.fout === "string" ? zoekParams.fout : undefined;
 
   if (!(await isIngelogd())) {
-    return <InlogScherm fout={fout} />;
+    return <InlogScherm taal={taal} fout={fout} />;
   }
 
-  const inhoud = await getInhoud();
-  const opgeslagen = params.opgeslagen === "1";
+  const inhoud = await getInhoud(taal);
+  const opgeslagen = zoekParams.opgeslagen === "1";
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
@@ -280,13 +318,14 @@ export default async function BeheerPagina({
         </div>
         <div className="flex items-center gap-2">
           <Link
-            href="/"
+            href={taalPad(taal, "/")}
             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
           >
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
             Bekijk website
           </Link>
           <form action={uitloggen}>
+            <input type="hidden" name="taal" value={taal} />
             <button
               type="submit"
               className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
@@ -297,6 +336,13 @@ export default async function BeheerPagina({
           </form>
         </div>
       </div>
+
+      <TaalTabs taal={taal} />
+      <p className="mt-3 text-xs leading-5 text-slate-500">
+        U bewerkt nu de{" "}
+        <strong>{taal === "nl" ? "Nederlandse" : "Engelse"}</strong> teksten.
+        Wissel hierboven van taal om de andere versie aan te passen.
+      </p>
 
       {opgeslagen && (
         <p
@@ -319,13 +365,17 @@ export default async function BeheerPagina({
       )}
       {!kvGeconfigureerd() && (
         <p className="mt-6 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">
-          Opslag: lokaal bestand (<code className="font-mono">data/content.json</code>).
-          Voor de live site op Vercel: koppel eenmalig &lsquo;Upstash for
+          Opslag: lokaal bestand (
+          <code className="font-mono">
+            {taal === "nl" ? "data/content.json" : "data/content-en.json"}
+          </code>
+          ). Voor de live site op Vercel: koppel eenmalig &lsquo;Upstash for
           Redis&rsquo; via het Vercel-dashboard, dan werkt het opslaan daar ook.
         </p>
       )}
 
       <form action={bewaarTeksten} className="mt-8">
+        <input type="hidden" name="taal" value={taal} />
         <div className="space-y-4">
           {Object.entries(inhoud).map(([sectie, waarde], i) => (
             <details
