@@ -34,7 +34,7 @@ const UI = {
     tijdlijnAria: "Tijdlijn van POS-innovaties",
     zoWerkt: "Zo werkt de statiegeldinname",
     antiLiquid: "Anti-liquid RFID-tag",
-    naarPatent: "Patent & samenwerking",
+    naarPatent: "Lees over patent & samenwerking",
   },
   en: {
     metaTitel: "Market & innovation",
@@ -46,7 +46,7 @@ const UI = {
     tijdlijnAria: "Timeline of POS innovations",
     zoWerkt: "How the deposit-return intake works",
     antiLiquid: "Anti-liquid RFID tag",
-    naarPatent: "Patent & partnership",
+    naarPatent: "Read about patent & partnership",
   },
 } as const;
 

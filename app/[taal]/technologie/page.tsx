@@ -32,7 +32,7 @@ const UI = {
     huidigeKassa: "De huidige zelfscankassa",
     cpsKassa: "De CPS-zelfscankassa",
     uitPatent: "Uit het patent",
-    naarMarkt: "Markt & innovatie",
+    naarMarkt: "Lees over markt & innovatie",
     naarPatent: "Patent & samenwerking",
   },
   en: {
@@ -48,7 +48,7 @@ const UI = {
     huidigeKassa: "Today's self-checkout",
     cpsKassa: "The CPS self-checkout",
     uitPatent: "From the patent",
-    naarMarkt: "Market & innovation",
+    naarMarkt: "Read about market & innovation",
     naarPatent: "Patent & partnership",
   },
 } as const;
@@ -246,7 +246,7 @@ export default async function TechnologiePage({
               </Link>
               <Link
                 href={pad(taal, "/patent")}
-                className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:bg-slate-50"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:bg-slate-100"
               >
                 {ui.naarPatent}
               </Link>

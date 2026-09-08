@@ -224,7 +224,8 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
           tegen de zwarte linkerwand (zoals de beveiligingspoort); de twee
           zwarte lijnen zijn doorgetrokken tot tegen de poort, met links op de
           bovenste lijn een pijlpunt als illustratie van de schuifrichting.
-          Open: in de wandkoker rechts geschoven. */}
+          Open: dezelfde volle lengte, naar rechts geschoven (uitgelijnd met de
+          product stoppoort erboven); de linkerlaan is dan geheel open. */}
       {poorten.privacy === "dicht" ? (
         <g>
           <rect x={14} y={564} width={160} height={24} fill={POORT} />
@@ -237,10 +238,8 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
         </g>
       ) : (
         <g>
-          <line x1={266} y1={570} x2={344} y2={570} stroke={NAVY} strokeWidth="2.5" />
-          <line x1={266} y1={582} x2={344} y2={582} stroke={NAVY} strokeWidth="2.5" />
-          <rect x={264} y={564} width={80} height={24} fill={POORT} />
-          <text x={304} y={580} textAnchor="middle" fontSize="10.5" fontWeight={700} fill="#ffffff">
+          <rect x={184} y={564} width={160} height={24} fill={POORT} />
+          <text x={264} y={580} textAnchor="middle" fontSize="11.5" fontWeight={700} fill="#ffffff">
             {labels.privacypoort}
           </text>
         </g>

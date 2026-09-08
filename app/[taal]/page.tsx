@@ -44,8 +44,11 @@ const UI = {
     stap: "Stap",
     bekijkSysteem: "Bekijk het volledige systeem",
     waarom: "Waarom dit werkt",
-    leesPatent: "Lees over het patent",
-    contact: "Neem contact op",
+    hoofdstukken: [
+      { route: "/technologie", label: "De technologie" },
+      { route: "/markt", label: "Markt & innovatie" },
+      { route: "/patent", label: "Patent & samenwerking" },
+    ],
   },
   en: {
     cijfersSr: "The scale of the problem in figures",
@@ -64,8 +67,11 @@ const UI = {
     stap: "Step",
     bekijkSysteem: "See the full system",
     waarom: "Why this works",
-    leesPatent: "Read about the patent",
-    contact: "Contact us",
+    hoofdstukken: [
+      { route: "/technologie", label: "The technology" },
+      { route: "/markt", label: "Market & innovation" },
+      { route: "/patent", label: "Patent & partnership" },
+    ],
   },
 } as const;
 
@@ -116,7 +122,7 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
 
           {/* 2FA-validatie visual */}
           <Reveal className="mt-14 lg:mt-0" delay={150}>
-            <div className="mx-auto mb-4 flex max-w-md flex-wrap items-center justify-between gap-2">
+            <div className="mx-auto mb-4 flex max-w-md flex-wrap items-center justify-center gap-2">
               <p className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-blue-800 uppercase">
                 <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                 {home.heroBadge}
@@ -350,19 +356,16 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
               {home.ctaTekst}
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link
-                href={pad(taal, "/patent")}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-blue-500"
-              >
-                {ui.leesPatent}
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </Link>
-              <Link
-                href={pad(taal, "/contact")}
-                className="inline-flex items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                {ui.contact}
-              </Link>
+              {ui.hoofdstukken.map((hoofdstuk) => (
+                <Link
+                  key={hoofdstuk.route}
+                  href={pad(taal, hoofdstuk.route)}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
+                >
+                  {hoofdstuk.label}
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </Link>
+              ))}
             </div>
           </Reveal>
         </div>

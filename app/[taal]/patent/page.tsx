@@ -25,7 +25,7 @@ const UI = {
       "Het patent 'Method and System for self-checkout at a point of sale' is geen eindpunt, maar het begin: POS-2FA-Intermediary zoekt een strategische koper of licentiepartner voor wereldwijde implementatie.",
     kicker: "Patent & samenwerking",
     contact: "Neem contact op",
-    eerstTechnologie: "Bekijk eerst de technologie",
+    naarHome: "Home",
     octrooiKnop: "Octrooigegevens",
   },
   en: {
@@ -34,7 +34,7 @@ const UI = {
       "The patent 'Method and System for self-checkout at a point of sale' is not an end point but the beginning: POS-2FA-Intermediary is looking for a strategic buyer or licensing partner for worldwide implementation.",
     kicker: "Patent & partnership",
     contact: "Contact us",
-    eerstTechnologie: "See the technology first",
+    naarHome: "Home",
     octrooiKnop: "Patent details",
   },
 } as const;
@@ -170,10 +170,10 @@ export default async function PatentPage({ params }: PageProps<"/[taal]/patent">
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
               <Link
-                href={pad(taal, "/technologie")}
+                href={pad(taal, "/")}
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-base font-semibold text-slate-800 transition-colors hover:bg-slate-100"
               >
-                {ui.eerstTechnologie}
+                {ui.naarHome}
               </Link>
             </div>
           </Reveal>

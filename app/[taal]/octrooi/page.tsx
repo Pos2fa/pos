@@ -13,15 +13,12 @@ const PDF_PAD = "/documents/WO-2026-182615-A1-tekst-en-tekeningen.pdf";
  * WO 2026/182615 A1 (WIPO). De downloadbare PDF bevat de beschrijving,
  * conclusies en figuren (zonder voorblad en nieuwheidsonderzoeksrapport).
  */
-const ABSTRACT =
-  "A method and a self-checkout POS (1) for self-checking out in a retail store. The method comprises a twofold article authentication check at the point of sale. The self-checkout POS comprises a walking area (16), an article processing part (10), a security gate (20), an RFID detector (30), a barcode scanner (40, 42), and a payment system (44). The RFID detector (30) is arranged to detect a presence of articles (52) in a section of the walking area (16) before the security gate (20), each of the articles (52) comprising an RFID tag that is detectable by the RFID detector (30). The barcode scanner (40, 42) is arranged to scan the articles (52), each comprising a barcode that is scannable by the barcode scanner (40, 42). The payment system (44) settles payment of the scanned articles (52) only if the RFID detector does not detect the presence of an article (52) in the section of the walking area (16) before the security gate (20).";
-
 const UI = {
   nl: {
     metaTitel: "Octrooigegevens",
     metaBeschrijving:
       "De gegevens van het Nederlandse octrooi NL4000008 en de internationale PCT-publicatie WO 2026/182615 A1 — Method and System for self-checkout at a point of sale.",
-    register: "Registergegevens",
+    register: "Gegevens van de Nederlandse publicatie",
     nummer: "Octrooinummer",
     soort: "Soort",
     status: "Status",
@@ -53,9 +50,6 @@ const UI = {
         waarde: "met internationaal nieuwheidsonderzoeksrapport (Art. 21(3))",
       },
     ],
-    abstractTitel: "Abstract (57) — letterlijke tekst van het voorblad",
-    abstractNoot:
-      "De officiële publicatie is in het Engels; onderstaande samenvatting is woordelijk overgenomen van het voorblad.",
     downloaden: "Download de publicatie: tekst en tekeningen (PDF, 1,3 MB)",
     naarPatent: "Patent & samenwerking",
   },
@@ -63,7 +57,7 @@ const UI = {
     metaTitel: "Patent details",
     metaBeschrijving:
       "The details of Dutch patent NL4000008 and the international PCT publication WO 2026/182615 A1 — Method and System for self-checkout at a point of sale.",
-    register: "Register details",
+    register: "Details of the Dutch publication",
     nummer: "Patent number",
     soort: "Type",
     status: "Status",
@@ -95,9 +89,6 @@ const UI = {
         waarde: "with international search report (Art. 21(3))",
       },
     ],
-    abstractTitel: "Abstract (57) — literal text from the front page",
-    abstractNoot:
-      "The abstract below is reproduced verbatim from the front page of the official publication.",
     downloaden: "Download the publication: text and drawings (PDF, 1.3 MB)",
     naarPatent: "Patent & partnership",
   },
@@ -199,19 +190,6 @@ export default async function OctrooiPage({
                 </div>
               ))}
             </dl>
-          </div>
-        </Reveal>
-
-        {/* Abstract, woordelijk van het voorblad */}
-        <Reveal className="mt-8">
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-7 sm:p-8">
-            <h2 className="text-xl font-extrabold text-slate-950">
-              {ui.abstractTitel}
-            </h2>
-            <p className="mt-2 text-xs text-slate-500">{ui.abstractNoot}</p>
-            <p className="mt-4 text-sm leading-7 text-slate-700" lang="en">
-              {ABSTRACT}
-            </p>
           </div>
         </Reveal>
 
