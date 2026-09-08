@@ -371,7 +371,7 @@ export const standaardInhoudEN: Inhoud = {
     introTitel: "Patent details",
     introTekst: "The details of the patent as registered at the patent office.",
     soort: "Dutch patent",
-    status: "Published on 4 September 2026",
+    status: "Published",
   },
 
   contact: {
