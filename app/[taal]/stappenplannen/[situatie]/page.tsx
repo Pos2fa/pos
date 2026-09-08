@@ -59,10 +59,12 @@ export default async function StappenplanPage({
   const { technologie } = await getInhoud(taal);
   const ui = UI[taal];
   const plan = technologie.stappenplannen[nummer - 1];
+  // Terug naar de situatietabbalk op de technologiepagina (met de volgende
+  // situatie actief), zodat de bulletpunten daar niet worden overgeslagen.
   const volgende =
     nummer < 4
       ? {
-          href: pad(taal, `/stappenplannen/situatie-${nummer + 1}`),
+          href: pad(taal, `/technologie#situatie-${nummer + 1}`),
           label: ui.volgende(nummer + 1, technologie.situaties[nummer].titel),
         }
       : { href: pad(taal, "/markt"), label: ui.naarMarkt };

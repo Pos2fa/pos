@@ -183,30 +183,31 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
       </text>
 
       {/* Product stoppoort: draaipunt (rondje) rechts, rechthoekig uiteinde links.
-          Open: rechtop rechts van de inpakplek. */}
+          Dicht: overlapt de bovenkant van de zwarte middellijn, zodat de
+          poort echt aansluit. Open: rechtop rechts van de inpakplek. */}
       {poorten.stop === "dicht" ? (
         <g>
-          <rect x={184} y={148} width={160} height={24} fill={POORT} />
-          <text x={260} y={164} textAnchor="middle" fontSize="11.5" fontWeight={700} fill="#ffffff">
+          <rect x={184} y={160} width={160} height={24} fill={POORT} />
+          <text x={260} y={176} textAnchor="middle" fontSize="11.5" fontWeight={700} fill="#ffffff">
             {labels.stoppoort}
           </text>
-          <circle cx={344} cy={160} r={8} fill={NAVY} />
+          <circle cx={344} cy={172} r={8} fill={NAVY} />
         </g>
       ) : (
         <g>
-          <rect x={322} y={22} width={24} height={138} fill={POORT} />
+          <rect x={322} y={34} width={24} height={138} fill={POORT} />
           <text
             x={334}
-            y={91}
+            y={103}
             textAnchor="middle"
             fontSize="11.5"
             fontWeight={700}
             fill="#ffffff"
-            transform="rotate(-90 334 91)"
+            transform="rotate(-90 334 103)"
           >
             {labels.stoppoort}
           </text>
-          <circle cx={334} cy={158} r={8} fill={NAVY} />
+          <circle cx={334} cy={170} r={8} fill={NAVY} />
         </g>
       )}
 
@@ -218,20 +219,26 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
       </text>
       <circle cx={16} cy={300} r={8} fill={NAVY} />
 
-      {/* Privacy poort: schuifdeur (beide kanten rechthoekig).
-          Rechts een vaste wand van twee zwarte lijnen; de deur schuift van
-          rechts naar links dicht. */}
-      <line x1={266} y1={570} x2={344} y2={570} stroke={NAVY} strokeWidth="2.5" />
-      <line x1={266} y1={582} x2={344} y2={582} stroke={NAVY} strokeWidth="2.5" />
+      {/* Privacy poort: schuifdeur (beide kanten rechthoekig), even lang als
+          de beveiligings- en product stoppoort (160). Dicht: volledig links
+          tegen de zwarte linkerwand (zoals de beveiligingspoort); de twee
+          zwarte lijnen zijn doorgetrokken tot tegen de poort, met links op de
+          bovenste lijn een pijlpunt als illustratie van de schuifrichting.
+          Open: in de wandkoker rechts geschoven. */}
       {poorten.privacy === "dicht" ? (
         <g>
-          <rect x={184} y={564} width={80} height={24} fill={POORT} />
-          <text x={224} y={580} textAnchor="middle" fontSize="10.5" fontWeight={700} fill="#ffffff">
+          <rect x={14} y={564} width={160} height={24} fill={POORT} />
+          <text x={94} y={580} textAnchor="middle" fontSize="11.5" fontWeight={700} fill="#ffffff">
             {labels.privacypoort}
           </text>
+          <line x1={181} y1={570} x2={344} y2={570} stroke={NAVY} strokeWidth="2.5" />
+          <polygon points="174,570 182,566.4 182,573.6" fill={NAVY} />
+          <line x1={174} y1={582} x2={344} y2={582} stroke={NAVY} strokeWidth="2.5" />
         </g>
       ) : (
         <g>
+          <line x1={266} y1={570} x2={344} y2={570} stroke={NAVY} strokeWidth="2.5" />
+          <line x1={266} y1={582} x2={344} y2={582} stroke={NAVY} strokeWidth="2.5" />
           <rect x={264} y={564} width={80} height={24} fill={POORT} />
           <text x={304} y={580} textAnchor="middle" fontSize="10.5" fontWeight={700} fill="#ffffff">
             {labels.privacypoort}
@@ -305,7 +312,7 @@ export default function SystemDiagram({
       extra: (
         <>
           <Winkelwagen x={96} y={410} />
-          <BoodschappenSet cx={264} y={210} />
+          <BoodschappenSet cx={264} y={222} />
         </>
       ),
     },
@@ -323,18 +330,18 @@ export default function SystemDiagram({
     },
     // Situatie 4: 2 winkelwagens — nieuwe klant (leeg) voor de
     // beveiligingspoort met de boodschappen onder de dichte product
-    // stoppoort; oude klant (leeg) voor de uitgang met de boodschappen op
-    // de inpakplek.
+    // stoppoort; oude klant voor de uitgang met de boodschappen in de
+    // winkelwagen.
     {
       poorten: { privacy: "dicht", stop: "dicht" },
       extra: (
         <>
           <Winkelwagen x={96} y={108} />
+          <BoodschappenSet cx={96} y={94} schaal={0.72} />
           <Kader cx={96} cy={140} tekst={labels.oudeKlant} />
           <Winkelwagen x={96} y={410} />
           <Kader cx={96} cy={442} tekst={labels.nieuweKlant} />
-          <BoodschappenSet cx={264} y={210} />
-          <BoodschappenSet cx={260} y={126} />
+          <BoodschappenSet cx={264} y={222} />
         </>
       ),
     },

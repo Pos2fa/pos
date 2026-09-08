@@ -26,7 +26,7 @@ const UI = {
     kicker: "Patent & samenwerking",
     contact: "Neem contact op",
     eerstTechnologie: "Bekijk eerst de technologie",
-    pctKnop: "PCT-pending",
+    octrooiKnop: "Octrooigegevens",
   },
   en: {
     metaTitel: "Patent & partnership",
@@ -35,7 +35,7 @@ const UI = {
     kicker: "Patent & partnership",
     contact: "Contact us",
     eerstTechnologie: "See the technology first",
-    pctKnop: "PCT-pending",
+    octrooiKnop: "Patent details",
   },
 } as const;
 
@@ -132,11 +132,11 @@ export default async function PatentPage({ params }: PageProps<"/[taal]/patent">
                     </p>
                   </div>
                   <Link
-                    href={pad(taal, "/pct-publicatie")}
+                    href={pad(taal, "/octrooi")}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-blue-800"
                   >
                     <FileText className="h-4 w-4" aria-hidden="true" />
-                    {ui.pctKnop}
+                    {ui.octrooiKnop}
                   </Link>
                 </div>
               </div>

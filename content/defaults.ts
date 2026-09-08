@@ -375,7 +375,7 @@ export const standaardInhoud = {
     introTekst:
       "De gegevens van het octrooi zoals geregistreerd bij het octrooibureau.",
     soort: "Nederlands octrooi",
-    status: "Gepubliceerd",
+    status: "Gepubliceerd op 4 september 2026",
   },
 
   contact: {

@@ -12,7 +12,6 @@ const ROUTES = [
   "/markt",
   "/patent",
   "/octrooi",
-  "/pct-publicatie",
   "/anti-liquid-rfid-tag",
   "/contact",
 ];

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, DoorOpen, ScanBarcode, PackageCheck, ShoppingCart } from "lucide-react";
 import { pad, type Taal } from "@/lib/i18n";
@@ -42,9 +42,31 @@ export default function SituationTabs({
   const [active, setActive] = useState(0);
   const current = situaties[active];
   const ui = UI[taal];
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Deeplink vanuit de stappenplanpagina's: #situatie-N opent tab N en
+  // scrolt naar de tabbalk, zodat de bulletpunten niet worden overgeslagen.
+  useEffect(() => {
+    const pasHashToe = () => {
+      const match = /^#situatie-([1-4])$/.exec(window.location.hash);
+      if (!match) return;
+      setActive(Number(match[1]) - 1);
+      // De browser scrolt zelf naar de tabknop met dit id; deze nazorg vangt
+      // het geval dat de navigatie de scroll terugzet. Bewust 'instant'
+      // ('auto' volgt de CSS-smooth-animatie, die in achtergrondtabbladen
+      // wordt gepauzeerd; een directe sprong is bij paginawissel gebruikelijk).
+      containerRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      setTimeout(() => {
+        containerRef.current?.scrollIntoView({ block: "start", behavior: "instant" });
+      }, 100);
+    };
+    pasHashToe();
+    window.addEventListener("hashchange", pasHashToe);
+    return () => window.removeEventListener("hashchange", pasHashToe);
+  }, []);
 
   return (
-    <div>
+    <div ref={containerRef} id="situaties" className="scroll-mt-24">
       <div
         role="tablist"
         aria-label={ui.tablijst}
@@ -57,11 +79,11 @@ export default function SituationTabs({
             <button
               key={situatie.titel}
               role="tab"
-              id={`situatie-tab-${i + 1}`}
+              id={`situatie-${i + 1}`}
               aria-selected={selected}
               aria-controls={`situatie-paneel-${i + 1}`}
               onClick={() => setActive(i)}
-              className={`flex cursor-pointer flex-col items-start gap-2 rounded-xl border p-4 text-left transition-colors ${
+              className={`flex scroll-mt-24 cursor-pointer flex-col items-start gap-2 rounded-xl border p-4 text-left transition-colors ${
                 selected
                   ? "border-blue-700 bg-blue-700 text-white shadow-md"
                   : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:bg-blue-50"
@@ -86,7 +108,7 @@ export default function SituationTabs({
       <div
         role="tabpanel"
         id={`situatie-paneel-${active + 1}`}
-        aria-labelledby={`situatie-tab-${active + 1}`}
+        aria-labelledby={`situatie-${active + 1}`}
         className="mt-4 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8"
       >
         <p className="text-base font-medium text-slate-900">{current.intro}</p>

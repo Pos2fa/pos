@@ -28,7 +28,6 @@ const VOORDEEL_ICONEN = [Shield, HeartHandshake, Gauge, Recycle, CheckCircle2, S
 const UI = {
   nl: {
     cijfersSr: "De omvang van het probleem in cijfers",
-    octrooi: "Octrooigegevens",
     visualAria:
       "Illustratie: het CPS-programma vergelijkt de RFID-boodschappenlijst met de QR-boodschappenlijst",
     kassa: "CPS-zelfscankassa",
@@ -50,7 +49,6 @@ const UI = {
   },
   en: {
     cijfersSr: "The scale of the problem in figures",
-    octrooi: "Patent details",
     visualAria:
       "Illustration: the CPS program compares the RFID shopping list with the QR shopping list",
     kassa: "CPS self-checkout",
@@ -123,13 +121,6 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
                 <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                 {home.heroBadge}
               </p>
-              <Link
-                href={pad(taal, "/octrooi")}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
-              >
-                {ui.octrooi}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
             </div>
             <div
               className="mx-auto max-w-md rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/60 backdrop-blur"
