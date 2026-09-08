@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import {
   ArrowRight,
   FileCheck2,
+  FileText,
   Globe2,
   Handshake,
   Lightbulb,
@@ -25,6 +26,7 @@ const UI = {
     kicker: "Patent & samenwerking",
     contact: "Neem contact op",
     eerstTechnologie: "Bekijk eerst de technologie",
+    pctKnop: "PCT-pending",
   },
   en: {
     metaTitel: "Patent & partnership",
@@ -33,6 +35,7 @@ const UI = {
     kicker: "Patent & partnership",
     contact: "Contact us",
     eerstTechnologie: "See the technology first",
+    pctKnop: "PCT-pending",
   },
 } as const;
 
@@ -91,7 +94,7 @@ export default async function PatentPage({ params }: PageProps<"/[taal]/patent">
                 <p className="mt-5 max-w-xl text-base leading-7 text-slate-300">
                   {patent.patentTekst}
                 </p>
-                <ul className="mt-7 flex flex-wrap gap-3">
+                <ul className="mt-7 flex flex-wrap justify-center gap-3">
                   {patent.kenmerken.map((kenmerk, i) => {
                     const Icoon = KENMERK_ICONEN[i % KENMERK_ICONEN.length];
                     return (
@@ -121,11 +124,20 @@ export default async function PatentPage({ params }: PageProps<"/[taal]/patent">
                     {patent.partnerTekst}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 rounded-xl border border-blue-200 bg-white p-4">
-                  <Globe2 className="h-6 w-6 shrink-0 text-blue-700" aria-hidden="true" />
-                  <p className="text-sm leading-6 text-slate-700">
-                    {patent.wereldwijdNoot}
-                  </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 rounded-xl border border-blue-200 bg-white p-4">
+                    <Globe2 className="h-6 w-6 shrink-0 text-blue-700" aria-hidden="true" />
+                    <p className="text-sm leading-6 text-slate-700">
+                      {patent.wereldwijdNoot}
+                    </p>
+                  </div>
+                  <Link
+                    href={pad(taal, "/pct-publicatie")}
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-blue-800"
+                  >
+                    <FileText className="h-4 w-4" aria-hidden="true" />
+                    {ui.pctKnop}
+                  </Link>
                 </div>
               </div>
             </Reveal>
