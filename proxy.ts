@@ -81,7 +81,8 @@ export function proxy(verzoek: NextRequest): NextResponse {
 }
 
 export const config = {
-  // Alles behalve interne Next-paden en bestanden met een extensie
-  // (afbeeldingen, sitemap.xml, robots.txt, favicon enzovoort).
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  // Alles behalve interne Next-paden, Vercel-meetpaden (Analytics/Speed
+  // Insights) en bestanden met een extensie (afbeeldingen, sitemap.xml,
+  // robots.txt, favicon enzovoort).
+  matcher: ["/((?!_next|_vercel|api|.*\\..*).*)"],
 };

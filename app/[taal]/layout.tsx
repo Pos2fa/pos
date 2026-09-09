@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TALEN, isTaal } from "@/lib/i18n";
@@ -90,6 +92,8 @@ export default async function RootLayout({
           {children}
         </main>
         <Footer taal={taal} />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
