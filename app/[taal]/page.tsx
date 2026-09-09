@@ -44,11 +44,6 @@ const UI = {
     stap: "Stap",
     bekijkSysteem: "Bekijk het volledige systeem",
     waarom: "Waarom dit werkt",
-    hoofdstukken: [
-      { route: "/technologie", label: "De technologie" },
-      { route: "/markt", label: "Markt & innovatie" },
-      { route: "/patent", label: "Patent & samenwerking" },
-    ],
   },
   en: {
     cijfersSr: "The scale of the problem in figures",
@@ -67,11 +62,6 @@ const UI = {
     stap: "Step",
     bekijkSysteem: "See the full system",
     waarom: "Why this works",
-    hoofdstukken: [
-      { route: "/technologie", label: "The technology" },
-      { route: "/markt", label: "Market & innovation" },
-      { route: "/patent", label: "Patent & partnership" },
-    ],
   },
 } as const;
 
@@ -287,20 +277,6 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
             })}
           </ol>
 
-          <Reveal className="mt-10">
-            <div className="flex flex-col items-start gap-4 rounded-2xl border border-blue-200 bg-blue-50 p-6 sm:flex-row sm:items-center sm:justify-between">
-              <p className="max-w-2xl text-sm leading-6 text-slate-700">
-                {home.kassiereNoot}
-              </p>
-              <Link
-                href={pad(taal, "/technologie")}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
-              >
-                {ui.bekijkSysteem}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -339,6 +315,21 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
               );
             })}
           </div>
+
+          <Reveal className="mt-10">
+            <div className="flex flex-col items-start gap-4 rounded-2xl border border-blue-200 bg-blue-50 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-2xl text-sm leading-6 text-slate-700">
+                {home.kassiereNoot}
+              </p>
+              <Link
+                href={pad(taal, "/technologie")}
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
+              >
+                {ui.bekijkSysteem}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -355,18 +346,6 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">
               {home.ctaTekst}
             </p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              {ui.hoofdstukken.map((hoofdstuk) => (
-                <Link
-                  key={hoofdstuk.route}
-                  href={pad(taal, hoofdstuk.route)}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
-                >
-                  {hoofdstuk.label}
-                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
           </Reveal>
         </div>
       </section>

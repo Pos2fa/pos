@@ -104,7 +104,7 @@ export default function Header({ taal }: { taal: Taal }) {
           <Logo className="h-11 w-auto" />
         </Link>
 
-        <nav aria-label={ui.hoofdnav} className="hidden items-center gap-1 lg:flex">
+        <nav aria-label={ui.hoofdnav} className="hidden items-center gap-2 lg:flex">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -112,10 +112,8 @@ export default function Header({ taal }: { taal: Taal }) {
                 key={link.href}
                 href={link.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
-                  active
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                className={`rounded-lg px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors ${
+                  active ? "bg-blue-900" : "bg-blue-700 hover:bg-blue-800"
                 }`}
               >
                 {link.label}
@@ -124,7 +122,7 @@ export default function Header({ taal }: { taal: Taal }) {
           })}
           <Link
             href={pad(taal, "/contact")}
-            className="mx-3 rounded-lg bg-blue-700 px-4.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
+            className="mr-3 rounded-lg bg-blue-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-800"
           >
             {ui.contact}
           </Link>
@@ -152,7 +150,7 @@ export default function Header({ taal }: { taal: Taal }) {
           aria-label={ui.mobieleNav}
           className="border-t border-slate-200 bg-white px-4 pt-2 pb-4 lg:hidden"
         >
-          <ul className="flex flex-col gap-1">
+          <ul className="flex flex-col gap-2">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
@@ -161,10 +159,8 @@ export default function Header({ taal }: { taal: Taal }) {
                     href={link.href}
                     aria-current={active ? "page" : undefined}
                     onClick={() => setOpen(false)}
-                    className={`block rounded-lg px-3 py-3 text-base font-medium ${
-                      active
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-slate-700 hover:bg-slate-100"
+                    className={`block rounded-lg px-4 py-3 text-base font-semibold text-white ${
+                      active ? "bg-blue-900" : "bg-blue-700 hover:bg-blue-800"
                     }`}
                   >
                     {link.label}

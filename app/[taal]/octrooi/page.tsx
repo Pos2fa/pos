@@ -51,7 +51,7 @@ const UI = {
       },
     ],
     downloaden: "Download de publicatie: tekst en tekeningen (PDF, 1,3 MB)",
-    naarPatent: "Patent & samenwerking",
+    naarContact: "Neem contact op",
   },
   en: {
     metaTitel: "Patent details",
@@ -90,7 +90,7 @@ const UI = {
       },
     ],
     downloaden: "Download the publication: text and drawings (PDF, 1.3 MB)",
-    naarPatent: "Patent & partnership",
+    naarContact: "Contact us",
   },
 } as const;
 
@@ -215,10 +215,10 @@ export default async function OctrooiPage({
             </div>
             <div className="flex shrink-0 gap-3">
               <Link
-                href={pad(taal, "/patent")}
+                href={pad(taal, "/contact")}
                 className="inline-flex items-center gap-2 rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
               >
-                {ui.naarPatent}
+                {ui.naarContact}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
