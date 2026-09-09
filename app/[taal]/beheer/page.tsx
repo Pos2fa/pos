@@ -74,6 +74,8 @@ const VELD_LABELS: Record<string, string> = {
   stappenplannen: "Stappenplannen (aparte pagina)",
   alineas: "Stappen",
   octrooiNummer: "Octrooinummer",
+  kvkNummer: "KvK-nummer",
+  btwNummer: "Btw-nummer",
   soort: "Soort",
   status: "Status",
   statiegeldTitel: "Statiegeld — titel",

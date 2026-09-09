@@ -12,6 +12,8 @@ export const standaardInhoudEN: Inhoud = {
     contactEmail: "info@pos-2fa-intermediary.com",
     patentTitel: "Method and System for self-checkout at a point of sale",
     octrooiNummer: "NL4000008",
+    kvkNummer: "42060207",
+    btwNummer: "NL869525869B01",
   },
 
   home: {

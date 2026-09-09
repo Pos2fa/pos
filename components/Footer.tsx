@@ -19,6 +19,8 @@ const UI = {
     interesse: "Interesse in het patent of een licentie­samenwerking?",
     rechten: "Alle rechten voorbehouden.",
     patent: "Patent",
+    kvk: "KvK",
+    btw: "Btw",
   },
   en: {
     footernav: "Footer navigation",
@@ -34,6 +36,8 @@ const UI = {
     interesse: "Interested in the patent or a licensing partnership?",
     rechten: "All rights reserved.",
     patent: "Patent",
+    kvk: "CoC (KvK)",
+    btw: "VAT",
   },
 } as const;
 
@@ -86,7 +90,9 @@ export default async function Footer({ taal }: { taal: Taal }) {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {new Date().getFullYear()} POS-2FA-Intermediary. {ui.rechten}
+            &copy; {new Date().getFullYear()} POS-2FA-Intermediary. {ui.rechten}{" "}
+            {ui.kvk} {inhoud.algemeen.kvkNummer} &middot; {ui.btw}{" "}
+            {inhoud.algemeen.btwNummer}
           </p>
           <p>
             {ui.patent}: &ldquo;{inhoud.algemeen.patentTitel}&rdquo;
