@@ -32,7 +32,6 @@ const UI = {
     fotoAlt:
       "Moderne zelfscan-zone in een supermarkt met veel open ruimte rond de kiosken en poortjes — er kan makkelijk langs de zelfscankassa gelopen worden",
     tijdlijnAria: "Tijdlijn van POS-innovaties",
-    zoWerkt: "Zo werkt de statiegeldinname",
     antiLiquid: "Anti-liquid RFID-tag",
     naarPatent: "Lees over patent & samenwerking",
   },
@@ -44,7 +43,6 @@ const UI = {
     fotoAlt:
       "Modern self-scan zone in a supermarket with plenty of open space around the kiosks and gates — it is easy to walk past the self-checkout",
     tijdlijnAria: "Timeline of POS innovations",
-    zoWerkt: "How the deposit-return intake works",
     antiLiquid: "Anti-liquid RFID tag",
     naarPatent: "Read about patent & partnership",
   },
@@ -152,13 +150,6 @@ export default async function MarktPage({ params }: PageProps<"/[taal]/markt">) 
                 <p className="mt-3 text-base leading-7 text-slate-600">
                   {markt.inleverpuntTekst}
                 </p>
-                <a
-                  href="#statiegeld"
-                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-700 hover:text-blue-800"
-                >
-                  {ui.zoWerkt}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
               </div>
             </Reveal>
           </div>

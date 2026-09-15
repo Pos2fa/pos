@@ -20,10 +20,10 @@ const STAP_ICONEN = [Radio, ScanLine, ShieldCheck];
 
 const UI = {
   nl: {
-    metaTitel: "De technologie",
+    metaTitel: "Dual-technology",
     metaBeschrijving:
       "De proactieve, met dual-technology beveiligde zelfscankassa: een Cyber-Physical System (CPS) vergelijkt QR-codes en RFID-tags via tweevoudige artikelauthenticatie (2FA).",
-    kicker: "De technologie",
+    kicker: "Dual-technology",
     fotoAlt:
       "Illustratie: een klant verbergt een product in de jas terwijl een andere klant met tas door de antidiefstalpoortjes loopt",
     fotoBijschrift:
@@ -36,10 +36,10 @@ const UI = {
     naarPatent: "Patent & samenwerking",
   },
   en: {
-    metaTitel: "The technology",
+    metaTitel: "Dual technology",
     metaBeschrijving:
       "The proactive self-checkout secured with dual technology: a Cyber-Physical System (CPS) compares QR codes and RFID tags through two-factor article authentication (2FA).",
-    kicker: "The technology",
+    kicker: "Dual technology",
     fotoAlt:
       "Illustration: a customer hides a product in their coat while another customer with a bag walks through the anti-theft gates",
     fotoBijschrift:

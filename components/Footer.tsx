@@ -10,7 +10,7 @@ const UI = {
     navigatie: "Navigatie",
     links: [
       { route: "/", label: "Home" },
-      { route: "/technologie", label: "De technologie" },
+      { route: "/technologie", label: "Dual-technology" },
       { route: "/markt", label: "Markt & innovatie" },
       { route: "/patent", label: "Patent & samenwerking" },
       { route: "/contact", label: "Contact" },
@@ -27,7 +27,7 @@ const UI = {
     navigatie: "Navigation",
     links: [
       { route: "/", label: "Home" },
-      { route: "/technologie", label: "The technology" },
+      { route: "/technologie", label: "Dual technology" },
       { route: "/markt", label: "Market & innovation" },
       { route: "/patent", label: "Patent & partnership" },
       { route: "/contact", label: "Contact" },
