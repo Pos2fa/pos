@@ -38,6 +38,7 @@ const UI = {
     geslaagdTekst:
       "Beide boodschappenlijsten komen overeen — betaling kan worden afgerond.",
     probleem: "Het probleem",
+    leesVerder: "Lees verder",
     fotoAlt:
       "Klant scant een verpakking met QR-code bij een zelfscankassa; de rode scanlijn valt over de code",
     oplossing: "De oplossing",
@@ -56,6 +57,7 @@ const UI = {
     geslaagd: "2FA validation passed",
     geslaagdTekst: "Both shopping lists match — payment can be completed.",
     probleem: "The problem",
+    leesVerder: "Read more",
     fotoAlt:
       "Customer scans a package with a QR code at a self-checkout; the red scan line falls over the code",
     oplossing: "The solution",
@@ -215,16 +217,25 @@ export default async function Home({ params }: PageProps<"/[taal]">) {
               const Icoon = PROBLEEM_ICONEN[i % PROBLEEM_ICONEN.length];
               return (
                 <Reveal key={kaart.titel} delay={i * 80}>
-                  <div className="h-full rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md">
+                  <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-md">
                     <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
                       <Icoon className="h-5.5 w-5.5" aria-hidden="true" />
                     </span>
                     <h3 className="mt-4 text-base font-bold text-slate-900">
                       {kaart.titel}
                     </h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                    <p className="mt-2 flex-1 text-sm leading-6 text-slate-600">
                       {kaart.tekst}
                     </p>
+                    {i === 3 && (
+                      <Link
+                        href={pad(taal, "/winkeldiefstal-onderzoek")}
+                        className="mt-4 inline-flex items-center justify-center gap-2 self-start rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
+                      >
+                        {ui.leesVerder}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    )}
                   </div>
                 </Reveal>
               );

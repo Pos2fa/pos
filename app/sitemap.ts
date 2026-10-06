@@ -13,6 +13,7 @@ const ROUTES = [
   "/patent",
   "/octrooi",
   "/anti-liquid-rfid-tag",
+  "/winkeldiefstal-onderzoek",
   "/contact",
 ];
 
