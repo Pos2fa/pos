@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Manrope } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Header from "@/components/Header";
@@ -94,6 +95,7 @@ export default async function RootLayout({
         <Footer taal={taal} />
         <Analytics />
         <SpeedInsights />
+        <GoogleAnalytics gaId="G-KSTN1L5WP8" />
       </body>
     </html>
   );
