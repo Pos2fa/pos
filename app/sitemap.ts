@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://pos-2fa-intermediary.com";
+// www is de primaire variant op Vercel (de kale domeinnaam redirect ernaartoe)
+const BASE_URL = "https://www.pos-2fa-intermediary.com";
 
 const ROUTES = [
   "",

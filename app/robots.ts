@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://pos-2fa-intermediary.com/sitemap.xml",
+    sitemap: "https://www.pos-2fa-intermediary.com/sitemap.xml",
   };
 }

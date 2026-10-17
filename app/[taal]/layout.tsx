@@ -52,7 +52,7 @@ export async function generateMetadata({
   const { taal } = await params;
   const meta = META[isTaal(taal) ? taal : "nl"];
   return {
-    metadataBase: new URL("https://pos-2fa-intermediary.com"),
+    metadataBase: new URL("https://www.pos-2fa-intermediary.com"),
     title: {
       default: meta.titel,
       template: "%s | POS-2FA-Intermediary",
