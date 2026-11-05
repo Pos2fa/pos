@@ -298,9 +298,9 @@ export const standaardInhoudEN: Inhoud = {
       },
       {
         periode: "Today",
-        titel: "RFID and dual technology",
+        titel: "Checkout via the RFID tag",
         tekst:
-          "Current RFID developments create attractive new opportunities for a further efficiency leap in POS operations: a purpose-developed RFID tag on the packaging, alongside the already present GS1 Digital Link QR code. With a positive impact on the return on investment, this leads to better operational efficiency and optimised inventory management. GS1 is meanwhile considering how to harmonise the standardisation protocols for dual technology.",
+          "Current RFID developments create attractive new opportunities for a further efficiency leap in POS operations: the fast-fashion industry is anticipating this by making RFID technology increasingly leading for all of its business processes — including 100% source tagging. As a result, independently of the Sunrise 2027 initiative, a new RFID-tag checkout procedure has emerged that is already in use at Uniqlo and Decathlon. Having customers scan the QR codes themselves at checkout has been replaced by an RFID reader automatically reading the RFID tags on the shopping in one go. Standardisation protocols from GS1 are used for this. A very customer-friendly and above all fast way of checking out, but one that is sensitive to fraudulent ‘booster bag’ shopping.",
       },
       {
         periode: "2026",

@@ -301,9 +301,9 @@ export const standaardInhoud = {
       },
       {
         periode: "Heden",
-        titel: "RFID en dual-technology",
+        titel: "Afrekenen via de RFID-tag",
         tekst:
-          "De huidige RFID-ontwikkelingen creëren aantrekkelijke nieuwe mogelijkheden voor een verdere efficiëntieslag in de POS-bedrijfsvoering: een specifiek ontwikkelde RFID-tag op de verpakking, naast de reeds aanwezige GS1 Digital Link QR-code. Met een positieve impact op de Return on Investment leidt dit tot betere operationele efficiëntie en optimalisatie van het voorraadbeheer. GS1 denkt intussen na over het harmoniseren van de standaardisatieprotocollen voor dual-technology.",
+          "De huidige RFID-ontwikkelingen creëren aantrekkelijke nieuwe mogelijkheden voor een verdere efficiëntieslag in de POS-bedrijfsvoering: de fast-fashion-industrie anticipeert hierop door de RFID-technologie steeds meer leidend te maken voor al haar bedrijfsprocessen — waaronder 100% source-tagging. Met als gevolg dat er los van het Sunrise 2027-initiatief een nieuwe RFID-tag-afrekenprocedure is ontstaan die momenteel al bij Uniqlo en Decathlon in gebruik is. Het voorheen tijdens het afrekenen door de klant zelf laten inscannen van de QR-codes is vervangen door het automatisch en in één keer door een RFID-reader laten inlezen van de RFID-tags op de boodschappen. Daarbij worden standaardisatieprotocollen van GS1 gebruikt. Een zeer klantvriendelijke en vooral snelle manier van afrekenen, maar wel gevoelig voor frauduleus ‘booster bag’-winkelen.",
       },
       {
         periode: "2026",

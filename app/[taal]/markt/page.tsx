@@ -32,6 +32,7 @@ const UI = {
     fotoAlt:
       "Moderne zelfscan-zone in een supermarkt met veel open ruimte rond de kiosken en poortjes — er kan makkelijk langs de zelfscankassa gelopen worden",
     tijdlijnAria: "Tijdlijn van POS-innovaties",
+    leesVerder: "Lees verder",
     antiLiquid: "Anti-liquid RFID-tag",
     naarPatent: "Lees over patent & samenwerking",
   },
@@ -43,6 +44,7 @@ const UI = {
     fotoAlt:
       "Modern self-scan zone in a supermarket with plenty of open space around the kiosks and gates — it is easy to walk past the self-checkout",
     tijdlijnAria: "Timeline of POS innovations",
+    leesVerder: "Read more",
     antiLiquid: "Anti-liquid RFID tag",
     naarPatent: "Read about patent & partnership",
   },
@@ -116,6 +118,16 @@ export default async function MarktPage({ params }: PageProps<"/[taal]/markt">) 
                     <p className="mt-3 text-base leading-7 text-slate-600">
                       {item.tekst}
                     </p>
+                    {/* Bijlage "RFID POS-innovaties" bij het item Heden */}
+                    {i === 4 && (
+                      <Link
+                        href={pad(taal, "/rfid-pos-innovaties")}
+                        className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-800"
+                      >
+                        {ui.leesVerder}
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                    )}
                   </li>
                 </Reveal>
               );
