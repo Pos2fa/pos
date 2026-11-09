@@ -20,8 +20,8 @@ import type { Taal } from "@/lib/i18n";
  * - de blauwe RFID-lijn staat dicht bij de kassa en eindigt er iets onder.
  */
 
-const NAVY = "#0c1a33";
-const POORT = "#2563eb";
+export const NAVY = "#0c1a33";
+export const POORT = "#2563eb";
 const GRIJS = "#e2e8f0";
 
 const LABELS = {
@@ -62,7 +62,7 @@ type PoortStand = "open" | "dicht";
 
 /* ── Bouwstenen ───────────────────────────────────────────── */
 
-function Wand({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) {
+export function Wand({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: number }) {
   return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={NAVY} strokeWidth="2.5" />;
 }
 
@@ -89,7 +89,7 @@ function Kader({ cx, cy, tekst }: { cx: number; cy: number; tekst: string }) {
 }
 
 /** Winkelwagen van boven gezien, wijzend richting de uitgang (omhoog). */
-function Winkelwagen({ x, y }: { x: number; y: number }) {
+export function Winkelwagen({ x, y }: { x: number; y: number }) {
   return (
     <g stroke={NAVY} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none">
       <polygon
@@ -112,7 +112,7 @@ function Winkelwagen({ x, y }: { x: number; y: number }) {
 const BOODSCHAPPEN_BREEDTE = 79;
 const BOODSCHAPPEN_HOOGTE = 79 * (309 / 640); // ≈ 38.1, beeldverhouding van de foto
 
-function BoodschappenSet({ cx, y, schaal = 1 }: { cx: number; y: number; schaal?: number }) {
+export function BoodschappenSet({ cx, y, schaal = 1 }: { cx: number; y: number; schaal?: number }) {
   const breedte = BOODSCHAPPEN_BREEDTE * schaal;
   const hoogte = BOODSCHAPPEN_HOOGTE * schaal;
   return (

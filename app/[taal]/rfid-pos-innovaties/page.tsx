@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import RfidKassaDiagram from "@/components/RfidKassaDiagram";
 import { isTaal, pad } from "@/lib/i18n";
 
 /**
@@ -50,6 +51,12 @@ const UI = {
     conclusieLabel: "Conclusie",
     conclusie:
       "De RFID-tag is geen wondermiddel tegen winkeldiefstal, maar wordt door de fast-fashion-industrie vooral gepositioneerd als een nieuwe klantvriendelijke manier om de boodschappen snel mee te kunnen afrekenen.",
+    oplossingTitel: "De 2FA-oplossing voor de RFID-tag-afrekenmethode",
+    alineasOplossing: [
+      "Gelukkig biedt de gepatenteerde 2FA-antidiefstalmethode ook een oplossing voor de nieuwe RFID-tag-afrekenmethode. Namelijk: als aan alle elementen van claim 1 uit het patent wordt voldaan, kan de in claim 4 beschreven uitvoeringsvorm toegepast worden.",
+      "De RFID-tags op de boodschappen uit de winkelwagen in de 2FA-‘kooi van Faraday’ worden nog wel gelezen zoals bij de zelfscankassa, maar nu als RFID-boodschappenlijst 1. Maar net zoals bij de zelfscankassa zijn de kunststof winkelwagentjes hier geschikter voor dan de metalen. Het zelfscannen van de boodschappen met de QR-code wordt vervangen door het nu in één keer inlezen van de RFID-tags als RFID-boodschappenlijst 2. Dit kan op een gelijksoortige manier zoals toegepast bij de Uniqlo-‘kooi van Faraday’.",
+      "De nieuwe winkeldiefstalbestendige CPS-RFID-kassa ziet er dan als volgt uit. Situatie 4 van de 2 winkelwagens, zoals weergegeven voor de zelfscankassa, is dan niet meer nodig omdat de RFID-afrekensnelheid minstens zo snel is.",
+    ],
     terug: "Terug naar Markt & innovatie",
   },
   en: {
@@ -89,6 +96,12 @@ const UI = {
     conclusieLabel: "Conclusion",
     conclusie:
       "The RFID tag is no miracle cure against shoplifting, but is positioned by the fast-fashion industry above all as a new, customer-friendly way to pay for the shopping quickly.",
+    oplossingTitel: "The 2FA solution for the RFID-tag checkout method",
+    alineasOplossing: [
+      "Fortunately, the patented 2FA anti-theft method also offers a solution for the new RFID-tag checkout method. Namely: if all elements of claim 1 of the patent are met, the embodiment described in claim 4 can be applied.",
+      "The RFID tags on the shopping from the trolley in the 2FA ‘Faraday cage’ are still read as at the self-checkout, but now as RFID shopping list 1. But just as with the self-checkout, plastic shopping trolleys are more suitable for this than metal ones. Self-scanning the shopping with the QR code is replaced by now reading the RFID tags in one go as RFID shopping list 2. This can be done in a similar way to that used in the Uniqlo ‘Faraday cage’.",
+      "The new theft-proof CPS RFID checkout then looks as follows. Situation 4 with the 2 shopping trolleys, as shown for the self-checkout, is then no longer needed because the RFID checkout speed is at least as fast.",
+    ],
     terug: "Back to Market & innovation",
   },
 } as const;
@@ -180,6 +193,28 @@ export default async function RfidPosInnovatiesPage({
               {ui.conclusieLabel}
             </h2>
             <p className="mt-3 text-lg leading-8 font-medium">{ui.conclusie}</p>
+          </div>
+        </Reveal>
+
+        {/* Aanvulling van de eigenaar (9 nov 2026): de 2FA-oplossing voor de
+            RFID-tag-afrekenmethode, met de drie aangepaste situatietekeningen
+            van de CPS-RFID-kassa (zonder verklarende tekst onder de plaatjes) */}
+        <Reveal className="mt-8">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-7 sm:p-8">
+            <h2 className="text-2xl font-extrabold text-slate-950">
+              {ui.oplossingTitel}
+            </h2>
+            {ui.alineasOplossing.map((alinea) => (
+              <p
+                key={alinea.slice(0, 40)}
+                className="mt-4 text-base leading-7 text-slate-700"
+              >
+                {alinea}
+              </p>
+            ))}
+            <div className="mt-8">
+              <RfidKassaDiagram taal={taal} />
+            </div>
           </div>
         </Reveal>
 
