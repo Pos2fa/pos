@@ -52,11 +52,18 @@ type PoortStand = "open" | "dicht";
 type PaneelProps = {
   privacy: PoortStand;
   labels: Labels;
-  toonInUitgang?: boolean;
+  toonUitgang?: boolean;
+  toonIngang?: boolean;
   children?: ReactNode;
 };
 
-function Paneel({ privacy, labels, toonInUitgang = false, children }: PaneelProps) {
+function Paneel({
+  privacy,
+  labels,
+  toonUitgang = false,
+  toonIngang = false,
+  children,
+}: PaneelProps) {
   return (
     <svg
       viewBox="0 0 360 600"
@@ -71,15 +78,16 @@ function Paneel({ privacy, labels, toonInUitgang = false, children }: PaneelProp
       <Wand x1={180} y1={12} x2={348} y2={12} />
       <Wand x1={348} y1={12} x2={348} y2={588} />
 
-      {/* Blauwe RFID-lijn: dicht bij de kassa */}
-      <line x1={192} y1={235} x2={192} y2={500} stroke={POORT} strokeWidth="4.5" />
+      {/* Blauwe RFID-lijn: op aanwijzing van de eigenaar een heel stuk naar
+          beneden geplaatst, tot vlak boven de privacy poort */}
+      <line x1={192} y1={350} x2={192} y2={560} stroke={POORT} strokeWidth="4.5" />
       <text
         x={185}
-        y={455}
+        y={515}
         fontSize="11.5"
         fontWeight={700}
         fill={POORT}
-        transform="rotate(-90 185 455)"
+        transform="rotate(-90 185 515)"
       >
         {labels.rfid}
       </text>
@@ -128,16 +136,17 @@ function Paneel({ privacy, labels, toonInUitgang = false, children }: PaneelProp
         {labels.camera}
       </text>
 
-      {/* In-/uitgang alleen in situatie 1 */}
-      {toonInUitgang && (
-        <>
-          <text x={17} y={40} fontSize="12.5" fontWeight={800} fill={NAVY}>
-            {labels.uitgang}
-          </text>
-          <text x={17} y={576} fontSize="12.5" fontWeight={800} fill={NAVY}>
-            {labels.ingang}
-          </text>
-        </>
+      {/* UITGANG in situatie 1; INGANG in situatie 3 (daar is de privacy
+          poort open, zodat de tekst niet over de dichte poort valt) */}
+      {toonUitgang && (
+        <text x={17} y={40} fontSize="12.5" fontWeight={800} fill={NAVY}>
+          {labels.uitgang}
+        </text>
+      )}
+      {toonIngang && (
+        <text x={17} y={576} fontSize="12.5" fontWeight={800} fill={NAVY}>
+          {labels.ingang}
+        </text>
       )}
 
       {children}
@@ -151,14 +160,15 @@ export default function RfidKassaDiagram({ taal }: { taal: Taal }) {
   const labels = LABELS[taal];
   const situaties: {
     privacy: PoortStand;
-    toonInUitgang?: boolean;
+    toonUitgang?: boolean;
+    toonIngang?: boolean;
     extra: ReactNode;
   }[] = [
     // Situatie 1: aanmelden — volle winkelwagen vlak voor de dichte
-    // beveiligingspoort; privacy poort open (vrije kassa).
+    // beveiligingspoort; privacy poort dicht (zoals in situatie 2).
     {
-      privacy: "open",
-      toonInUitgang: true,
+      privacy: "dicht",
+      toonUitgang: true,
       extra: (
         <>
           <Winkelwagen x={96} y={410} />
@@ -178,9 +188,11 @@ export default function RfidKassaDiagram({ taal }: { taal: Taal }) {
       ),
     },
     // Situatie 3: klaar — de winkelwagen met de boodschappen erin staat op
-    // de plek van de vroegere inpakplek; privacy poort open.
+    // de plek van de vroegere inpakplek; privacy poort open en de tekst
+    // INGANG onderin (verhuisd uit situatie 1).
     {
       privacy: "open",
+      toonIngang: true,
       extra: (
         <>
           <Winkelwagen x={264} y={120} />
@@ -202,7 +214,8 @@ export default function RfidKassaDiagram({ taal }: { taal: Taal }) {
           <Paneel
             privacy={situatie.privacy}
             labels={labels}
-            toonInUitgang={situatie.toonInUitgang}
+            toonUitgang={situatie.toonUitgang}
+            toonIngang={situatie.toonIngang}
           >
             {situatie.extra}
           </Paneel>
