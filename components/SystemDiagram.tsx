@@ -34,6 +34,7 @@ const LABELS = {
     privacypoort: "privacy poort",
     camera: "CAMERA",
     kassa: "zelfscankassa",
+    qr: "QR-code lezer",
     uitgang: "UITGANG",
     ingang: "INGANG",
     situatie: "Situatie",
@@ -49,6 +50,7 @@ const LABELS = {
     privacypoort: "privacy gate",
     camera: "CAMERA",
     kassa: "self-checkout",
+    qr: "QR code reader",
     uitgang: "EXIT",
     ingang: "ENTRANCE",
     situatie: "Situation",
@@ -252,7 +254,11 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
       <rect x={240} y={308} width={60} height={44} rx={4} fill={NAVY} />
       <rect x={246} y={314} width={48} height={28} rx={2} fill={POORT} opacity={0.85} />
       <rect x={218} y={348} width={104} height={104} rx={8} fill="#ffffff" stroke={NAVY} strokeWidth="2.5" />
-      <line x1={238} y1={372} x2={302} y2={372} stroke={NAVY} strokeWidth="4" strokeLinecap="round" />
+      {/* QR-code lezer: blauwe streep met tekst erboven */}
+      <text x={270} y={364} textAnchor="middle" fontSize="10" fontWeight={700} fill={POORT}>
+        {labels.qr}
+      </text>
+      <line x1={238} y1={372} x2={302} y2={372} stroke={POORT} strokeWidth="4" strokeLinecap="round" />
       <text x={270} y={408} textAnchor="middle" fontSize="13" fontWeight={800} fill={NAVY}>
         CPS
       </text>
