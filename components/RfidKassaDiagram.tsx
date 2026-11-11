@@ -116,6 +116,21 @@ function Paneel({
       <Wand x1={180} y1={12} x2={348} y2={12} />
       <Wand x1={348} y1={12} x2={348} y2={588} />
 
+      {/* De oorspronkelijke RFID-tag lezer: van de beveiligingspoort tot
+          aan de privacy poort — de hele ruimte van de 2FA-'kooi van
+          Faraday' (zoals op de technologie-pagina) */}
+      <line x1={192} y1={300} x2={192} y2={564} stroke={POORT} strokeWidth="4.5" />
+      <text
+        x={185}
+        y={480}
+        fontSize="11.5"
+        fontWeight={700}
+        fill={POORT}
+        transform="rotate(-90 185 480)"
+      >
+        {labels.rfid}
+      </text>
+
       {/* RFID-tag lezer: tekst met daaronder een blauwe horizontale lijn,
           vlak boven de afgeschermde afrekenbak */}
       <text

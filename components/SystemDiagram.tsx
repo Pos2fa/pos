@@ -15,9 +15,10 @@ import type { Taal } from "@/lib/i18n";
  *   (stoppoort open = rechtop rechts van de inpakplek, schuifdeur open =
  *   naar rechts geschoven);
  * - in- en uitgang zijn in alle situaties geheel open;
- * - de zwarte middellijn loopt door tot net onder de RFID-lijn en sluit
- *   haaks aan op de zijkant van de kassa (afgrenzing van de open ruimte);
- * - de blauwe RFID-lijn staat dicht bij de kassa en eindigt er iets onder.
+ * - de zwarte middellijn loopt langs de beveiligingspoort door tot aan de
+ *   privacy poort (afgrenzing van de open ruimte);
+ * - de blauwe RFID-lijn loopt van de beveiligingspoort tot aan de privacy
+ *   poort: de hele ruimte van de 2FA-'kooi van Faraday'.
  */
 
 export const NAVY = "#0c1a33";
@@ -153,17 +154,13 @@ function Paneel({ poorten, labels, toonInUitgang = false, children }: PaneelProp
       <Wand x1={180} y1={12} x2={348} y2={12} />
       <Wand x1={348} y1={12} x2={348} y2={588} />
 
-      {/* Zwarte middellijn: doorgetrokken tot net onder de RFID-lijn en
-          haaks aansluitend op de zijkant van de kassa */}
-      <polyline
-        points="180,172 180,473 218,473 218,452"
-        fill="none"
-        stroke={NAVY}
-        strokeWidth="2.5"
-      />
+      {/* Zwarte middellijn: langs de beveiligingspoort doorgetrokken tot aan
+          de privacy poort (zonder het horizontale haakje naar de kassa) */}
+      <line x1={180} y1={172} x2={180} y2={564} stroke={NAVY} strokeWidth="2.5" />
 
-      {/* Blauwe RFID-lijn: dicht bij de kassa, tot iets onder de kassa */}
-      <line x1={206} y1={300} x2={206} y2={467} stroke={POORT} strokeWidth="4.5" />
+      {/* Blauwe RFID-lijn: van de beveiligingspoort tot aan de privacy
+          poort — de hele ruimte van de 2FA-'kooi van Faraday' */}
+      <line x1={206} y1={300} x2={206} y2={564} stroke={POORT} strokeWidth="4.5" />
       <text
         x={199}
         y={430}
